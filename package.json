@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "pnpm --filter web dev",
     "build": "pnpm --filter ui build && pnpm --filter web build",
+    "type-check": "pnpm --filter web run type-check",
     "lint": "pnpm --recursive lint",
     "preview": "pnpm --filter web preview",
     "clean": "pnpm --recursive clean"

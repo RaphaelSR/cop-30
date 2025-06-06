@@ -10,6 +10,8 @@ Uma plataforma digital web-first que conecta turistas, moradores e guias locais 
 - 🧩 **Biblioteca de Componentes** reutilizáveis
 - ⚡ **Performance Otimizada** com Vite
 - 🎯 **TypeScript** para type safety
+- 🚀 **CI/CD Automático** com GitHub Actions
+- 🌍 **Deploy Automático** no GitHub Pages
 
 ## 🚀 Tecnologias
 
@@ -58,6 +60,25 @@ pnpm lint
 # Limpar builds
 pnpm clean
 ```
+
+## 🚀 Deploy Automático
+
+O projeto está configurado com CI/CD automático usando GitHub Actions:
+
+- **Trigger**: Commits na branch `main`
+- **Pipeline**: Teste → Build → Deploy
+- **Destino**: GitHub Pages
+- **URL**: `https://[seu-usuario].github.io/cop-30/`
+
+### Workflow
+1. **Test**: Verificação de tipos TypeScript
+2. **Build**: Compilação otimizada para produção
+3. **Deploy**: Deploy automático no GitHub Pages
+
+### Para ativar o deploy:
+1. Configure GitHub Pages no repositório (Settings → Pages → Source: GitHub Actions)
+2. Ative as permissões de workflow (Settings → Actions → General → Read and write permissions)
+3. Faça push na branch `main`
 
 ## 🌟 Funcionalidades Implementadas
 

@@ -17,7 +17,12 @@
     "resolveJsonModule": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+    "baseUrl": ".",
+    "paths": {
+      "ui": ["../../packages/ui/src/index.ts"],
+      "ui/*": ["../../packages/ui/src/*"]
+    }
   },
   "include": [
     "src"

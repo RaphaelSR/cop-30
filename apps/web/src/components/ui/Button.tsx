@@ -1,7 +1,7 @@
 import React, { ReactNode } from "react";
 import { Link } from "react-router-dom";
 
-interface ButtonProps {
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode;
   variant?: "primary" | "secondary" | "outline" | "ghost";
   size?: "sm" | "md" | "lg";
@@ -22,7 +22,8 @@ export const Button: React.FC<ButtonProps> = ({
   onClick,
   disabled = false,
   className = "",
-  fullWidth = false
+  fullWidth = false,
+  ...rest
 }) => {
   const baseClasses =
     "inline-flex items-center justify-center font-semibold rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cop-green-500 disabled:opacity-50 disabled:cursor-not-allowed";
@@ -70,7 +71,7 @@ export const Button: React.FC<ButtonProps> = ({
   }
 
   return (
-    <button className={allClasses} onClick={onClick} disabled={disabled}>
+    <button className={allClasses} onClick={onClick} disabled={disabled} {...rest}>
       {children}
     </button>
   );

@@ -15,19 +15,21 @@ describe("LandingPage Integration", () => {
     it("should render main title", () => {
       render(<LandingPage />);
 
-      expect(screen.getByText(/experimente belém/i)).toBeInTheDocument();
+      expect(screen.getByText("COP30 Belém Hub")).toBeInTheDocument();
     });
 
     it("should render main description", () => {
       render(<LandingPage />);
 
-      expect(screen.getByText(/autenticamente/i)).toBeInTheDocument();
+      expect(
+        screen.getByText(/experiência autêntica da amazônia/i)
+      ).toBeInTheDocument();
     });
 
     it("should render features section", () => {
       render(<LandingPage />);
 
-      expect(screen.getByText("Hospedagem Autêntica")).toBeInTheDocument();
+      expect(screen.getByText("Hospedagens Autênticas")).toBeInTheDocument();
       expect(screen.getByText("Guias Locais")).toBeInTheDocument();
       expect(screen.getByText("Impacto Social")).toBeInTheDocument();
     });
@@ -35,7 +37,8 @@ describe("LandingPage Integration", () => {
     it("should render quick access section", () => {
       render(<LandingPage />);
 
-      expect(screen.getByText(/explorar/i)).toBeInTheDocument();
+      expect(screen.getByText("Encontrar Hospedagem")).toBeInTheDocument();
+      expect(screen.getByText("Buscar Guias")).toBeInTheDocument();
     });
   });
 
@@ -43,7 +46,7 @@ describe("LandingPage Integration", () => {
     it("should have correct semantic structure", () => {
       render(<LandingPage />);
 
-      expect(screen.getByText(/experimente belém/i)).toBeInTheDocument();
+      expect(screen.getByText("COP30 Belém Hub")).toBeInTheDocument();
     });
 
     it("should have hierarchical headings", () => {

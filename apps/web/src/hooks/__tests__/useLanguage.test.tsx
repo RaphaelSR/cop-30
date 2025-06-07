@@ -72,7 +72,7 @@ describe("useLanguage Hook", () => {
       });
 
       const translation = result.current.t("nav.home");
-      expect(translation).toBe("Home");
+      expect(translation).toBe("Início");
     });
 
     it("should return English translation", () => {

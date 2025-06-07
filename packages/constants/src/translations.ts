@@ -55,7 +55,41 @@ export const translations: Record<string, Translation> = {
       subtitle:
         "Conecte-se com guias locais especializados em turismo sustentável e tradutores certificados para uma experiência autêntica em Belém",
       constructionMessage:
-        "Estamos trabalhando para trazer os melhores guias e tradutores de Belém"
+        "Estamos trabalhando para trazer os melhores guias e tradutores de Belém",
+      searchPlaceholder: "Buscar por nome ou especialidade...",
+      resultsCount: "guias encontrados",
+      filters: {
+        search: "Buscar",
+        languages: "Idiomas",
+        categories: "Categorias",
+        onlyFree: "Apenas gratuitos",
+        showFilters: "Mostrar filtros",
+        hideFilters: "Ocultar filtros",
+        clear: "Limpar filtros"
+      },
+      categories: {
+        cultural: "Cultural",
+        gastronomic: "Gastronômico",
+        nature: "Natureza",
+        historical: "Histórico",
+        adventure: "Aventura"
+      },
+      details: {
+        rating: "Avaliação",
+        verified: "Verificado",
+        free: "Gratuito",
+        contact: "Contato",
+        schedule: "Horário",
+        languages: "Idiomas",
+        category: "Categoria",
+        viewOnMap: "Ver no mapa",
+        contactVia: "Entrar em contato via"
+      },
+      statistics: {
+        totalGuides: "Total de Guias",
+        categories: "Categorias",
+        averageRating: "Avaliação Média"
+      }
     },
     events: {
       title: "Agenda de Eventos",
@@ -80,6 +114,7 @@ export const translations: Record<string, Translation> = {
       confirm: "Confirmar",
       save: "Salvar",
       edit: "Editar",
+      delete: "Excluir",
       remove: "Excluir",
       back: "Voltar",
       next: "Próximo",
@@ -93,7 +128,10 @@ export const translations: Record<string, Translation> = {
       viewLess: "Ver Menos",
       comingSoon: "Em breve",
       underConstruction: "Em construção",
-      viewDetails: "Ver detalhes",
+      viewDetails: "Detalhes",
+      about: "Sobre",
+      pricing: "Preços",
+      noResults: "Nenhum resultado encontrado",
       night: "noite",
       by: "Por",
       person: "pessoa"
@@ -179,7 +217,41 @@ export const translations: Record<string, Translation> = {
       subtitle:
         "Connect with local guides specialized in sustainable tourism and certified translators for an authentic experience in Belém",
       constructionMessage:
-        "We are working to bring you the best guides and translators from Belém"
+        "We are working to bring you the best guides and translators from Belém",
+      searchPlaceholder: "Search guides, experiences or locations...",
+      resultsCount: "{{count}} guide(s) found",
+      filters: {
+        search: "Search",
+        languages: "Languages",
+        categories: "Categories",
+        onlyFree: "Free only",
+        showFilters: "Show filters",
+        hideFilters: "Hide filters",
+        clear: "Clear all"
+      },
+      categories: {
+        cultural: "Cultural",
+        gastronomic: "Gastronomic",
+        nature: "Nature",
+        historical: "Historical",
+        adventure: "Adventure"
+      },
+      details: {
+        rating: "Rating",
+        verified: "Verified",
+        free: "Free",
+        contact: "Contact",
+        schedule: "Schedule",
+        languages: "Languages",
+        category: "Category",
+        viewOnMap: "View on map",
+        contactVia: "Contact via"
+      },
+      statistics: {
+        totalGuides: "Total Guides",
+        categories: "Categories",
+        averageRating: "Average Rating"
+      }
     },
     events: {
       title: "Events Schedule",
@@ -204,7 +276,8 @@ export const translations: Record<string, Translation> = {
       confirm: "Confirm",
       save: "Save",
       edit: "Edit",
-      remove: "Delete",
+      delete: "Delete",
+      remove: "Remove",
       back: "Back",
       next: "Next",
       previous: "Previous",
@@ -217,7 +290,10 @@ export const translations: Record<string, Translation> = {
       viewLess: "View Less",
       comingSoon: "Coming Soon",
       underConstruction: "Under Construction",
-      viewDetails: "View details",
+      viewDetails: "Details",
+      about: "About",
+      pricing: "Pricing",
+      noResults: "No results found",
       night: "night",
       by: "By",
       person: "person"
@@ -304,7 +380,41 @@ export const translations: Record<string, Translation> = {
       subtitle:
         "Conéctate con guías locales especializados en turismo sostenible y traductores certificados para una experiencia auténtica en Belém",
       constructionMessage:
-        "Estamos trabajando para traerte los mejores guías y traductores de Belém"
+        "Estamos trabajando para traerte los mejores guías y traductores de Belém",
+      searchPlaceholder: "Buscar guías, experiencias o ubicaciones...",
+      resultsCount: "{{count}} guía(s) encontrado(s)",
+      filters: {
+        search: "Buscar",
+        languages: "Idiomas",
+        categories: "Categorías",
+        onlyFree: "Solo gratuitos",
+        showFilters: "Mostrar filtros",
+        hideFilters: "Ocultar filtros",
+        clear: "Limpiar todo"
+      },
+      categories: {
+        cultural: "Cultural",
+        gastronomic: "Gastronómico",
+        nature: "Naturaleza",
+        historical: "Histórico",
+        adventure: "Aventura"
+      },
+      details: {
+        rating: "Calificación",
+        verified: "Verificado",
+        free: "Gratuito",
+        contact: "Contacto",
+        schedule: "Horario",
+        languages: "Idiomas",
+        category: "Categoría",
+        viewOnMap: "Ver en el mapa",
+        contactVia: "Contactar vía"
+      },
+      statistics: {
+        totalGuides: "Total de Guías",
+        categories: "Categorías",
+        averageRating: "Calificación Promedio"
+      }
     },
     events: {
       title: "Agenda de Eventos",
@@ -329,6 +439,7 @@ export const translations: Record<string, Translation> = {
       confirm: "Confirmar",
       save: "Guardar",
       edit: "Editar",
+      delete: "Eliminar",
       remove: "Eliminar",
       back: "Atrás",
       next: "Siguiente",
@@ -342,7 +453,10 @@ export const translations: Record<string, Translation> = {
       viewLess: "Ver Menos",
       comingSoon: "Próximamente",
       underConstruction: "En construcción",
-      viewDetails: "Ver detalles",
+      viewDetails: "Detalles",
+      about: "Acerca de",
+      pricing: "Precios",
+      noResults: "No se encontraron resultados",
       night: "noche",
       by: "Por",
       person: "persona"

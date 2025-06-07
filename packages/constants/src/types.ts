@@ -57,6 +57,40 @@ export interface Translation {
     title: string;
     subtitle: string;
     constructionMessage: string;
+    searchPlaceholder: string;
+    resultsCount: string;
+    filters: {
+      search: string;
+      languages: string;
+      categories: string;
+      onlyFree: string;
+      showFilters: string;
+      hideFilters: string;
+      clear: string;
+    };
+    categories: {
+      cultural: string;
+      gastronomic: string;
+      nature: string;
+      historical: string;
+      adventure: string;
+    };
+    details: {
+      rating: string;
+      verified: string;
+      free: string;
+      contact: string;
+      schedule: string;
+      languages: string;
+      category: string;
+      viewOnMap: string;
+      contactVia: string;
+    };
+    statistics: {
+      totalGuides: string;
+      categories: string;
+      averageRating: string;
+    };
   };
 
   // Events Page
@@ -84,11 +118,11 @@ export interface Translation {
     save: string;
     edit: string;
     delete: string;
-    save: string;
-    edit: string;
     remove: string;
     back: string;
-    g;
+    next: string;
+    previous: string;
+    search: string;
     filter: string;
     sort: string;
     clear: string;
@@ -98,6 +132,9 @@ export interface Translation {
     comingSoon: string;
     underConstruction: string;
     viewDetails: string;
+    about: string;
+    pricing: string;
+    noResults: string;
     night: string;
     by: string;
     person: string;

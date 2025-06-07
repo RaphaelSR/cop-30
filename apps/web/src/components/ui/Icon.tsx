@@ -15,6 +15,7 @@ import {
   IconMenu2,
   IconX,
   IconChevronRight,
+  IconChevronUp,
   IconExternalLink,
   IconStar,
   IconHeart,
@@ -29,7 +30,7 @@ import {
   IconPhone,
   IconLeaf,
   IconChevronDown,
-  IconCheck,
+  IconCheck
 } from "@tabler/icons-react";
 
 interface IconProps {
@@ -68,9 +69,11 @@ export const Icon: React.FC<IconProps> = ({
     language: IconLanguage,
     menu: IconMenu2,
     close: IconX,
-    'chevron-right': IconChevronRight,
-    'chevron-down': IconChevronDown,
-    'external-link': IconExternalLink,
+    x: IconX,
+    "chevron-right": IconChevronRight,
+    "chevron-down": IconChevronDown,
+    "chevron-up": IconChevronUp,
+    "external-link": IconExternalLink,
     star: IconStar,
     heart: IconHeart,
     share: IconShare,
@@ -82,7 +85,7 @@ export const Icon: React.FC<IconProps> = ({
     mail: IconMail,
     phone: IconPhone,
     leaf: IconLeaf,
-    check: IconCheck,
+    check: IconCheck
   };
 
   const IconComponent = iconComponents[name];
@@ -93,10 +96,6 @@ export const Icon: React.FC<IconProps> = ({
   }
 
   return (
-    <IconComponent
-      size={sizeMap[size]}
-      stroke={stroke}
-      className={className}
-    />
+    <IconComponent size={sizeMap[size]} stroke={stroke} className={className} />
   );
 };

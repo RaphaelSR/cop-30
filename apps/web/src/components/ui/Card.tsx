@@ -1,6 +1,10 @@
 import React, { ReactNode } from "react";
+import {
+  Card as MantineCard,
+  CardProps as MantineCardProps
+} from "@mantine/core";
 
-interface CardProps {
+interface CardProps extends Omit<MantineCardProps, "padding"> {
   children: ReactNode;
   className?: string;
   padding?: "sm" | "md" | "lg";
@@ -11,30 +15,39 @@ export const Card: React.FC<CardProps> = ({
   children,
   className = "",
   padding = "md",
-  hover = false
+  hover = false,
+  ...rest
 }) => {
-  const paddingClasses = {
-    sm: "p-4",
-    md: "p-6",
-    lg: "p-8"
-  };
-
-  const hoverClasses = hover
-    ? "hover:shadow-lg hover:scale-105 transition-all duration-200"
-    : "";
+  const mantinePadding = {
+    sm: "sm",
+    md: "md",
+    lg: "lg"
+  } as const;
 
   return (
-    <div
-      className={`
-        bg-white dark:bg-gray-800 
-        rounded-xl shadow-md 
-        border border-gray-200 dark:border-gray-700
-        ${paddingClasses[padding]} 
-        ${hoverClasses} 
-        ${className}
-      `}
+    <MantineCard
+      shadow="sm"
+      padding={mantinePadding[padding]}
+      radius="md"
+      withBorder
+      className={className}
+      style={{
+        transition: hover ? "all 0.2s ease, box-shadow 0.2s ease" : undefined,
+        cursor: hover ? "pointer" : undefined
+      }}
+      {...(hover && {
+        onMouseEnter: (e) => {
+          e.currentTarget.style.transform = "scale(1.02)";
+          e.currentTarget.style.boxShadow = "var(--mantine-shadow-lg)";
+        },
+        onMouseLeave: (e) => {
+          e.currentTarget.style.transform = "scale(1)";
+          e.currentTarget.style.boxShadow = "var(--mantine-shadow-sm)";
+        }
+      })}
+      {...rest}
     >
       {children}
-    </div>
+    </MantineCard>
   );
 };

@@ -113,9 +113,8 @@ export const StayPage: React.FC = () => {
     }
   };
 
-  const handleCardClick = (listing: Listing) => {
-    // Aqui implementaremos a navegação para detalhes ou modal
-    console.log("Card clicked:", listing);
+  const handleCardClick = (_listing: Listing) => {
+    // TODO: Implementar navegação para página de detalhes
   };
 
   return (

@@ -1,119 +1,117 @@
-import { describe, it, expect, beforeEach, vi } from 'vitest'
-import { renderHook, act } from '../../test/test-utils'
-import { useLanguage, LanguageProvider } from '../useLanguage'
-import { createLocalStorageMock } from '../../test/test-utils'
+import { describe, it, expect, beforeEach } from "vitest";
+import { renderHook, act } from "../../test/test-utils";
+import { useLanguage, LanguageProvider } from "../useLanguage";
+import { createLocalStorageMock } from "../../test/test-utils";
 
-describe('useLanguage Hook', () => {
-  let localStorageMock: ReturnType<typeof createLocalStorageMock>
+describe("useLanguage Hook", () => {
+  let localStorageMock: ReturnType<typeof createLocalStorageMock>;
 
   beforeEach(() => {
-    localStorageMock = createLocalStorageMock()
-    Object.defineProperty(window, 'localStorage', {
+    localStorageMock = createLocalStorageMock();
+    Object.defineProperty(window, "localStorage", {
       value: localStorageMock,
       writable: true
-    })
-  })
+    });
+  });
 
-  describe('Inicialização', () => {
-    it('deve inicializar com português como idioma padrão', () => {
+  describe("Initialization", () => {
+    it("should initialize with Portuguese as default language", () => {
       const { result } = renderHook(() => useLanguage(), {
         wrapper: LanguageProvider
-      })
+      });
 
-      expect(result.current.currentLanguage).toBe('pt')
-    })
+      expect(result.current.currentLanguage).toBe("pt");
+    });
 
-    it('deve fornecer lista de idiomas disponíveis', () => {
+    it("should provide list of available languages", () => {
       const { result } = renderHook(() => useLanguage(), {
         wrapper: LanguageProvider
-      })
+      });
 
       expect(result.current.languages).toEqual([
-        { code: 'pt', name: 'Português', flag: '🇧🇷', nativeName: 'Português' },
-        { code: 'en', name: 'English', flag: '🇺🇸', nativeName: 'English' }
-      ])
-    })
-  })
+        { code: "pt", name: "Português", flag: "🇧🇷", nativeName: "Português" },
+        { code: "en", name: "English", flag: "🇺🇸", nativeName: "English" }
+      ]);
+    });
+  });
 
-  describe('Mudança de idioma', () => {
-    it('deve alterar idioma para inglês', () => {
+  describe("Language Change", () => {
+    it("should change language to English", () => {
       const { result } = renderHook(() => useLanguage(), {
         wrapper: LanguageProvider
-      })
+      });
 
       act(() => {
-        result.current.changeLanguage('en')
-      })
+        result.current.changeLanguage("en");
+      });
 
-      expect(result.current.currentLanguage).toBe('en')
-    })
+      expect(result.current.currentLanguage).toBe("en");
+    });
 
-    it('deve alterar idioma para português', () => {
+    it("should change language to Portuguese", () => {
       const { result } = renderHook(() => useLanguage(), {
         wrapper: LanguageProvider
-      })
-
-      // Muda para inglês primeiro
-      act(() => {
-        result.current.changeLanguage('en')
-      })
-
-      // Depois volta para português
-      act(() => {
-        result.current.changeLanguage('pt')
-      })
-
-      expect(result.current.currentLanguage).toBe('pt')
-    })
-  })
-
-  describe('Função de tradução', () => {
-    it('deve retornar tradução em português', () => {
-      const { result } = renderHook(() => useLanguage(), {
-        wrapper: LanguageProvider
-      })
-
-      const translation = result.current.t('nav.home')
-      expect(translation).toBe('Home')
-    })
-
-    it('deve retornar tradução em inglês', () => {
-      const { result } = renderHook(() => useLanguage(), {
-        wrapper: LanguageProvider
-      })
+      });
 
       act(() => {
-        result.current.changeLanguage('en')
-      })
+        result.current.changeLanguage("en");
+      });
 
-      const translation = result.current.t('nav.home')
-      expect(translation).toBe('Home')
-    })
+      act(() => {
+        result.current.changeLanguage("pt");
+      });
 
-    it('deve retornar chave se tradução não existir', () => {
+      expect(result.current.currentLanguage).toBe("pt");
+    });
+  });
+
+  describe("Translation Function", () => {
+    it("should return Portuguese translation", () => {
       const { result } = renderHook(() => useLanguage(), {
         wrapper: LanguageProvider
-      })
+      });
 
-      const translation = result.current.t('inexistent.key')
-      expect(translation).toBe('inexistent.key')
-    })
+      const translation = result.current.t("nav.home");
+      expect(translation).toBe("Home");
+    });
 
-    it('deve suportar traduções aninhadas', () => {
+    it("should return English translation", () => {
       const { result } = renderHook(() => useLanguage(), {
         wrapper: LanguageProvider
-      })
+      });
 
-      const translation = result.current.t('nav.guides')
-      expect(translation).toBe('Guias')
-    })
-  })
+      act(() => {
+        result.current.changeLanguage("en");
+      });
 
-  describe('Tratamento de erros', () => {
-    it('deve lançar erro quando usado fora do provider', () => {
+      const translation = result.current.t("nav.home");
+      expect(translation).toBe("Home");
+    });
+
+    it("should return key if translation does not exist", () => {
+      const { result } = renderHook(() => useLanguage(), {
+        wrapper: LanguageProvider
+      });
+
+      const translation = result.current.t("inexistent.key");
+      expect(translation).toBe("inexistent.key");
+    });
+
+    it("should support nested translations", () => {
+      const { result } = renderHook(() => useLanguage(), {
+        wrapper: LanguageProvider
+      });
+
+      const translation = result.current.t("nav.guides");
+      expect(translation).toBe("Guias");
+    });
+  });
+
+  describe("Error Handling", () => {
+    it("should throw error when used outside provider", () => {
       expect(() => {
-        renderHook(() => useLanguage())
-      }).toThrow('useLanguage must be used within a LanguageProvider')
-    })
-  })
-})
+        renderHook(() => useLanguage());
+      }).toThrow("useLanguage must be used within a LanguageProvider");
+    });
+  });
+});

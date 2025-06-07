@@ -25,7 +25,7 @@ export const GSImageCard: React.FC<GSImageCardProps> = ({
   return (
     <div
       className={cn(
-        "relative overflow-hidden bg-white",
+        "relative overflow-hidden bg-white dark:bg-gray-800",
         borderRadius.lg,
         shadows.md,
         className

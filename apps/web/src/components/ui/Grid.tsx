@@ -1,6 +1,7 @@
 import React, { ReactNode } from "react";
+import { SimpleGrid, SimpleGridProps } from "@mantine/core";
 
-interface GridProps {
+interface GridProps extends Omit<SimpleGridProps, "cols"> {
   children: ReactNode;
   cols?: 1 | 2 | 3 | 4 | 6 | 12;
   gap?: "sm" | "md" | "lg" | "xl";
@@ -18,44 +19,35 @@ export const Grid: React.FC<GridProps> = ({
   cols = 1,
   gap = "md",
   className = "",
-  responsive
+  responsive,
+  ...rest
 }) => {
-  const colsClasses = {
-    1: "grid-cols-1",
-    2: "grid-cols-2",
-    3: "grid-cols-3",
-    4: "grid-cols-4",
-    6: "grid-cols-6",
-    12: "grid-cols-12"
-  };
+  const mantineSpacing = {
+    sm: "sm",
+    md: "md",
+    lg: "lg",
+    xl: "xl"
+  } as const;
 
-  const gapClasses = {
-    sm: "gap-4",
-    md: "gap-6",
-    lg: "gap-8",
-    xl: "gap-12"
-  };
-
-  let responsiveClasses = "";
-  if (responsive) {
-    const { sm, md, lg, xl } = responsive;
-    if (sm) responsiveClasses += ` sm:${colsClasses[sm]}`;
-    if (md) responsiveClasses += ` md:${colsClasses[md]}`;
-    if (lg) responsiveClasses += ` lg:${colsClasses[lg]}`;
-    if (xl) responsiveClasses += ` xl:${colsClasses[xl]}`;
-  }
+  // Mapeamento correto dos breakpoints do Tailwind para Mantine
+  const breakpoints = responsive
+    ? {
+        base: cols,
+        sm: responsive.sm || cols, // 640px+
+        md: responsive.md || cols, // 768px+
+        lg: responsive.lg || cols, // 1024px+
+        xl: responsive.xl || cols // 1280px+
+      }
+    : cols;
 
   return (
-    <div
-      className={`
-        grid 
-        ${colsClasses[cols]} 
-        ${gapClasses[gap]} 
-        ${responsiveClasses} 
-        ${className}
-      `}
+    <SimpleGrid
+      cols={breakpoints}
+      spacing={mantineSpacing[gap]}
+      className={className}
+      {...rest}
     >
       {children}
-    </div>
+    </SimpleGrid>
   );
 };

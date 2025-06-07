@@ -15,6 +15,17 @@
 - Hook `useTheme()` para controle de tema
 - Componente `ThemeProvider` para gerenciamento de estado
 - Classes Tailwind dinâmicas (`dark:`)
+- **✅ NOVA**: Sincronização completa Mantine + Tailwind
+- **✅ NOVA**: Variáveis CSS customizadas para consistência
+- **✅ NOVA**: Suporte dark theme em todos os componentes UI
+
+### 📱 Responsividade
+- **Mobile-first** approach com Tailwind CSS
+- Sistema de breakpoints: `sm` (640px), `md` (768px), `lg` (1024px), `xl` (1280px)
+- Grid responsivo configurável
+- Componentes Container com tamanhos adaptativos
+- **✅ NOVA**: Layout principal otimizado para responsividade
+- **✅ NOVA**: Sincronização de breakpoints Mantine/Tailwind
 
 ### 🧩 Biblioteca de Componentes UI
 Componentes reutilizáveis criados seguindo princípios **DRY** e **SOLID**:

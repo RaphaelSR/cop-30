@@ -29,19 +29,21 @@ export const GSBottomSheet: React.FC<GSBottomSheetProps> = ({
       {/* Bottom sheet content */}
       <div
         className={cn(
-          "relative w-full max-w-lg bg-white rounded-t-3xl shadow-xl max-h-[90vh] overflow-hidden",
+          "relative w-full max-w-lg bg-white dark:bg-gray-800 rounded-t-3xl shadow-xl max-h-[90vh] overflow-hidden",
           className
         )}
       >
         {title && (
-          <div className="flex items-center justify-between p-4 border-b border-gray-200">
-            <h2 className="text-lg font-semibold text-gray-900">{title}</h2>
+          <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
+              {title}
+            </h2>
             <button
               onClick={onClose}
-              className="p-1 rounded-full hover:bg-gray-100 transition-colors"
+              className="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
             >
               <svg
-                className="w-5 h-5 text-gray-500"
+                className="w-5 h-5 text-gray-500 dark:text-gray-400"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"

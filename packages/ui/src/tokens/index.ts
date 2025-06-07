@@ -6,16 +6,16 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export const colors = {
-  primary: "green-600",
-  accent: "purple-600",
-  text: "gray-800",
-  muted: "gray-500",
-  background: "white",
-  surface: "gray-50",
-  error: "red-500",
-  warning: "yellow-500",
-  success: "green-500",
-  info: "blue-500"
+  primary: "cop-green-600",
+  accent: "cop-purple-600",
+  text: "gray-800 dark:gray-200",
+  muted: "gray-500 dark:gray-400",
+  background: "white dark:gray-900",
+  surface: "gray-50 dark:gray-800",
+  error: "red-500 dark:red-400",
+  warning: "yellow-500 dark:yellow-400",
+  success: "green-500 dark:green-400",
+  info: "blue-500 dark:blue-400"
 };
 
 export const spacing = {

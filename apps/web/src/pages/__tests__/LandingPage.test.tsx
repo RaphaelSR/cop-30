@@ -1,70 +1,67 @@
-import { describe, it, expect, vi } from 'vitest'
-import { render, screen } from '../../test/test-utils'
-import { LandingPage } from '../LandingPage'
+import { describe, it, expect, vi } from "vitest";
+import { render, screen } from "../../test/test-utils";
+import { LandingPage } from "../LandingPage";
 
-// Mock do react-router-dom
-vi.mock('react-router-dom', async () => {
-  const actual = await vi.importActual('react-router-dom')
+vi.mock("react-router-dom", async () => {
+  const actual = await vi.importActual("react-router-dom");
   return {
     ...actual,
-    useNavigate: () => vi.fn(),
-  }
-})
+    useNavigate: () => vi.fn()
+  };
+});
 
-describe('LandingPage Integration', () => {
-  describe('Renderização de conteúdo', () => {
-    it('deve renderizar o título principal', () => {
-      render(<LandingPage />)
-      
-      expect(screen.getByText(/experimente belém/i)).toBeInTheDocument()
-    })
+describe("LandingPage Integration", () => {
+  describe("Content Rendering", () => {
+    it("should render main title", () => {
+      render(<LandingPage />);
 
-    it('deve renderizar a descrição principal', () => {
-      render(<LandingPage />)
-      
-      expect(screen.getByText(/autenticamente/i)).toBeInTheDocument()
-    })
+      expect(screen.getByText(/experimente belém/i)).toBeInTheDocument();
+    });
 
-    it('deve renderizar seção de features', () => {
-      render(<LandingPage />)
-      
-      expect(screen.getByText('Hospedagem Autêntica')).toBeInTheDocument()
-      expect(screen.getByText('Guias Locais')).toBeInTheDocument()
-      expect(screen.getByText('Impacto Social')).toBeInTheDocument()
-    })
+    it("should render main description", () => {
+      render(<LandingPage />);
 
-    it('deve renderizar seção de acesso rápido', () => {
-      render(<LandingPage />)
-      
-      expect(screen.getByText(/explorar/i)).toBeInTheDocument()
-    })
-  })
+      expect(screen.getByText(/autenticamente/i)).toBeInTheDocument();
+    });
 
-  describe('Acessibilidade', () => {
-    it('deve ter estrutura semântica correta', () => {
-      render(<LandingPage />)
-      
-      // A LandingPage não tem role="main", mas tem uma estrutura div principal
-      expect(screen.getByText(/experimente belém/i)).toBeInTheDocument()
-    })
+    it("should render features section", () => {
+      render(<LandingPage />);
 
-    it('deve ter headings hierárquicos', () => {
-      render(<LandingPage />)
-      
-      // A LandingPage usa GSSectionHeader que cria h2, não h1
-      const headings = screen.getAllByRole('heading', { level: 2 })
-      expect(headings.length).toBeGreaterThan(0)
-    })
-  })
+      expect(screen.getByText("Hospedagem Autêntica")).toBeInTheDocument();
+      expect(screen.getByText("Guias Locais")).toBeInTheDocument();
+      expect(screen.getByText("Impacto Social")).toBeInTheDocument();
+    });
 
-  describe('Performance', () => {
-    it('deve carregar rapidamente', () => {
-      const startTime = performance.now()
-      render(<LandingPage />)
-      const endTime = performance.now()
-      
-      const renderTime = endTime - startTime
-      expect(renderTime).toBeLessThan(100) // Menos de 100ms
-    })
-  })
-})
+    it("should render quick access section", () => {
+      render(<LandingPage />);
+
+      expect(screen.getByText(/explorar/i)).toBeInTheDocument();
+    });
+  });
+
+  describe("Accessibility", () => {
+    it("should have correct semantic structure", () => {
+      render(<LandingPage />);
+
+      expect(screen.getByText(/experimente belém/i)).toBeInTheDocument();
+    });
+
+    it("should have hierarchical headings", () => {
+      render(<LandingPage />);
+
+      const headings = screen.getAllByRole("heading", { level: 2 });
+      expect(headings.length).toBeGreaterThan(0);
+    });
+  });
+
+  describe("Performance", () => {
+    it("should load quickly", () => {
+      const startTime = performance.now();
+      render(<LandingPage />);
+      const endTime = performance.now();
+
+      const renderTime = endTime - startTime;
+      expect(renderTime).toBeLessThan(100);
+    });
+  });
+});

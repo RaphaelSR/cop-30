@@ -7,12 +7,62 @@
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
+  
+  /* Variáveis CSS customizadas para sincronização com Mantine */
+  --custom-bg-primary: #ffffff;
+  --custom-bg-secondary: #f8f9fa;
+  --custom-text-primary: #212529;
+  --custom-text-secondary: #6c757d;
+  --custom-border: #dee2e6;
+}
+
+[data-mantine-color-scheme="dark"] {
+  --custom-bg-primary: #1a1b1e;
+  --custom-bg-secondary: #25262b;
+  --custom-text-primary: #c1c2c5;
+  --custom-text-secondary: #909296;
+  --custom-border: #373a40;
 }
 
 body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
+  background-color: var(--mantine-color-body);
+  color: var(--mantine-color-text);
+  transition: background-color 200ms ease, color 200ms ease;
+}
+
+/* Garante que o html também respeite o tema */
+html {
+  background-color: var(--mantine-color-body);
+  transition: background-color 200ms ease;
+}
+
+/* Override para elementos que podem não respeitar o tema automaticamente */
+* {
+  border-color: var(--mantine-color-default-border);
+}
+
+/* Classes utilitárias que respeitam o tema */
+.bg-themed-primary {
+  background-color: var(--custom-bg-primary);
+}
+
+.bg-themed-secondary {
+  background-color: var(--custom-bg-secondary);
+}
+
+.text-themed-primary {
+  color: var(--custom-text-primary);
+}
+
+.text-themed-secondary {
+  color: var(--custom-text-secondary);
+}
+
+.border-themed {
+  border-color: var(--custom-border);
 }
 
 /* Utility classes para contraste de acessibilidade */

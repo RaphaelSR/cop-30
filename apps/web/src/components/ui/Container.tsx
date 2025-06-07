@@ -1,6 +1,10 @@
 import React, { ReactNode } from "react";
+import {
+  Container as MantineContainer,
+  ContainerProps as MantineContainerProps
+} from "@mantine/core";
 
-interface ContainerProps {
+interface ContainerProps extends Omit<MantineContainerProps, "size"> {
   children: ReactNode;
   size?: "sm" | "md" | "lg" | "xl" | "full";
   className?: string;
@@ -11,28 +15,25 @@ export const Container: React.FC<ContainerProps> = ({
   children,
   size = "lg",
   className = "",
-  padding = true
+  padding = true,
+  ...rest
 }) => {
-  const sizeClasses = {
-    sm: "max-w-2xl",
-    md: "max-w-4xl",
-    lg: "max-w-7xl",
-    xl: "max-w-screen-xl",
-    full: "max-w-full"
-  };
-
-  const paddingClasses = padding ? "px-4 sm:px-6 lg:px-8" : "";
+  const mantineSize = {
+    sm: "sm",
+    md: "md",
+    lg: "lg",
+    xl: "xl",
+    full: "responsive"
+  } as const;
 
   return (
-    <div
-      className={`
-        ${sizeClasses[size]} 
-        mx-auto 
-        ${paddingClasses} 
-        ${className}
-      `}
+    <MantineContainer
+      size={mantineSize[size]}
+      className={className}
+      px={padding ? "md" : 0}
+      {...rest}
     >
       {children}
-    </div>
+    </MantineContainer>
   );
 };

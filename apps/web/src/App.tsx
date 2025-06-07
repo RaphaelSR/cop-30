@@ -9,8 +9,8 @@ import { ThemeProvider, LanguageProvider } from "./hooks";
 
 function App() {
   // GitHub Pages base path para produção
-  const basename = import.meta.env.PROD ? '/cop-30' : '';
-  
+  const basename = import.meta.env.PROD ? "/cop-30" : "";
+
   return (
     <ThemeProvider>
       <LanguageProvider>

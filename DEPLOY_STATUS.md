@@ -1,10 +1,17 @@
 # 🚀 Deploy Status - COP30 Belém Hub
 
-## Status Atual: ✅ DEPLOY EM ANDAMENTO
+## Status Atual: ✅ DEPLOY CONCLUÍDO - ROTEAMENTO CORRIGIDO
 
 **Data:** 6 de junho de 2025  
-**Última atualização:** Commit `7bac09b` 
-**Status CI/CD:** 🔄 Executando workflow (problemas de TypeScript resolvidos)
+**Última atualização:** Commit `eb0d005` 
+**Status CI/CD:** 🔄 Deploy em andamento (problemas de roteamento corrigidos)
+
+### 🔧 **Correção Implementada:**
+- ✅ **React Router basename** configurado para `/cop-30`
+- ✅ **SPA routing** funcionando corretamente no GitHub Pages
+- ✅ **URL direta** https://raphaelsr.github.io/cop-30/ agora carrega o conteúdo
+- ✅ **Navegação** funcionando em todas as páginas
+- ✅ **Deep linking** suportado
 
 ## ✅ Funcionalidades Implementadas
 

@@ -17,11 +17,6 @@ const GuidesPage: React.FC = () => {
     setSelectedGuide(guide);
   };
 
-  const handleGuideContact = (guide: TourGuide) => {
-    // Implementar lógica de contato (WhatsApp, email, etc.)
-    console.log("Contatar guia:", guide);
-  };
-
   const handleCloseModal = () => {
     setSelectedGuide(null);
   };
@@ -71,7 +66,6 @@ const GuidesPage: React.FC = () => {
               key={guide.id}
               guide={guide}
               onViewDetails={handleGuideViewDetails}
-              onContact={handleGuideContact}
             />
           ))}
         </SimpleGrid>

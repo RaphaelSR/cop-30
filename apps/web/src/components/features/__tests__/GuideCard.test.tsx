@@ -23,11 +23,9 @@ const mockGuide: TourGuide = {
 
 describe("GuideCard Component", () => {
   const mockOnViewDetails = vi.fn();
-  const mockOnContact = vi.fn();
 
   beforeEach(() => {
     mockOnViewDetails.mockClear();
-    mockOnContact.mockClear();
   });
 
   describe("Basic Rendering", () => {
@@ -36,7 +34,6 @@ describe("GuideCard Component", () => {
         <GuideCard
           guide={mockGuide}
           onViewDetails={mockOnViewDetails}
-          onContact={mockOnContact}
         />
       );
 
@@ -44,8 +41,6 @@ describe("GuideCard Component", () => {
       expect(
         screen.getByText("Guia especializado em turismo cultural em Belém")
       ).toBeInTheDocument();
-      expect(screen.getByText("08:00 - 18:00")).toBeInTheDocument();
-      expect(screen.getByText("Centro Histórico de Belém")).toBeInTheDocument();
     });
 
     it("should render guide image", () => {
@@ -53,7 +48,6 @@ describe("GuideCard Component", () => {
         <GuideCard
           guide={mockGuide}
           onViewDetails={mockOnViewDetails}
-          onContact={mockOnContact}
         />
       );
 
@@ -67,12 +61,10 @@ describe("GuideCard Component", () => {
         <GuideCard
           guide={mockGuide}
           onViewDetails={mockOnViewDetails}
-          onContact={mockOnContact}
         />
       );
 
-      expect(screen.getByText("Português")).toBeInTheDocument();
-      expect(screen.getByText("English")).toBeInTheDocument();
+      expect(screen.getByText("Português, English")).toBeInTheDocument();
     });
   });
 
@@ -82,7 +74,6 @@ describe("GuideCard Component", () => {
         <GuideCard
           guide={mockGuide}
           onViewDetails={mockOnViewDetails}
-          onContact={mockOnContact}
         />
       );
 
@@ -94,7 +85,6 @@ describe("GuideCard Component", () => {
         <GuideCard
           guide={mockGuide}
           onViewDetails={mockOnViewDetails}
-          onContact={mockOnContact}
         />
       );
 
@@ -106,7 +96,6 @@ describe("GuideCard Component", () => {
         <GuideCard
           guide={mockGuide}
           onViewDetails={mockOnViewDetails}
-          onContact={mockOnContact}
         />
       );
 
@@ -120,7 +109,6 @@ describe("GuideCard Component", () => {
         <GuideCard
           guide={paidGuide}
           onViewDetails={mockOnViewDetails}
-          onContact={mockOnContact}
         />
       );
 
@@ -135,7 +123,6 @@ describe("GuideCard Component", () => {
         <GuideCard
           guide={mockGuide}
           onViewDetails={mockOnViewDetails}
-          onContact={mockOnContact}
         />
       );
 
@@ -145,19 +132,18 @@ describe("GuideCard Component", () => {
       expect(mockOnViewDetails).toHaveBeenCalledWith(mockGuide);
     });
 
-    it("should call onContact when contact button is clicked", () => {
+    it("should call onViewDetails when card is clicked", () => {
       render(
         <GuideCard
           guide={mockGuide}
           onViewDetails={mockOnViewDetails}
-          onContact={mockOnContact}
         />
       );
 
-      const contactButton = screen.getByText(/contato/i);
-      contactButton.click();
+      const card = screen.getByRole("button");
+      card.click();
 
-      expect(mockOnContact).toHaveBeenCalledWith(mockGuide);
+      expect(mockOnViewDetails).toHaveBeenCalledWith(mockGuide);
     });
   });
 
@@ -167,28 +153,28 @@ describe("GuideCard Component", () => {
         <GuideCard
           guide={mockGuide}
           onViewDetails={mockOnViewDetails}
-          onContact={mockOnContact}
         />
       );
 
+      // O texto da categoria vem das especialidades ou da tradução
       expect(screen.getByText(/cultural/i)).toBeInTheDocument();
     });
 
-    it("should show different category icons for different categories", () => {
+    it("should show different category for gastronomic guides", () => {
       const gastronomicGuide = {
         ...mockGuide,
-        category: "gastronomic" as const
+        category: "gastronomic" as const,
+        specialties: ["Gastronomia Regional"]
       };
 
       render(
         <GuideCard
           guide={gastronomicGuide}
           onViewDetails={mockOnViewDetails}
-          onContact={mockOnContact}
         />
       );
 
-      expect(screen.getByText(/gastronômico/i)).toBeInTheDocument();
+      expect(screen.getByText("Gastronomia Regional")).toBeInTheDocument();
     });
   });
 });

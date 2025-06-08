@@ -19,7 +19,7 @@ export const PageLayout: React.FC<PageLayoutProps> = ({
   headerAlign = "center",
   showHeader = true,
   className = "",
-  containerSize = "lg"
+  containerSize = "full"
 }) => {
   return (
     <div

@@ -54,10 +54,49 @@ export const localTranslations: Record<Language, TranslationKeys> = {
       title: "Hospedagem",
       subtitle: "Encontre acomodações autênticas com famílias locais",
       searchPlaceholder: "Buscar por bairro, tipo...",
-      resultCount: "resultados encontrados",
+      resultCount: "resultado encontrado",
+      resultsCount: "resultados encontrados",
       upTo: "Até",
-      noResults: "Nenhum resultado encontrado",
-      viewAll: "Ver Todos"
+      noResults: "Nenhum resultado encontrado para",
+      viewAll: "Ver Todos",
+      about: "Sobre esta hospedagem",
+      hostDetails: "Informações do anfitrião",
+      amenities: "Comodidades",
+      contactInfo: "Contato",
+      contactHost: "Entrar em contato",
+      perNight: "por noite",
+      verified: "Verificado",
+      guests: "hóspedes",
+      filters: {
+        showFilters: "Mostrar filtros",
+        hideFilters: "Ocultar filtros",
+        clear: "Limpar filtros",
+        apply: "Aplicar filtros",
+        priceRange: "Faixa de preço",
+        capacity: "Capacidade",
+        neighborhood: "Bairro",
+        type: "Tipo de hospedagem",
+        verifiedHost: "Anfitrião verificado",
+        minPrice: "Preço mínimo",
+        maxPrice: "Preço máximo",
+        allNeighborhoods: "Todos os bairros",
+        allTypes: "Todos os tipos"
+      },
+      types: {
+        house: "Casa",
+        apartment: "Apartamento",
+        cabin: "Cabana",
+        room: "Quarto"
+      },
+      neighborhoods: {
+        centro: "Centro",
+        cidadeVelha: "Cidade Velha",
+        ilhaDoCombu: "Ilha do Combu",
+        nazare: "Nazaré",
+        umarizal: "Umarizal",
+        batista: "Batista Campos",
+        jurunas: "Jurunas"
+      }
     },
     features: {
       authenticStay: {
@@ -140,10 +179,49 @@ export const localTranslations: Record<Language, TranslationKeys> = {
       title: "Stay",
       subtitle: "Find authentic accommodations with local families",
       searchPlaceholder: "Search by neighborhood, type...",
-      resultCount: "results found",
+      resultCount: "result found",
+      resultsCount: "results found",
       upTo: "Up to",
-      noResults: "No results found",
-      viewAll: "View All"
+      noResults: "No results found for",
+      viewAll: "View All",
+      about: "About this accommodation",
+      hostDetails: "Host information",
+      amenities: "Amenities",
+      contactInfo: "Contact",
+      contactHost: "Contact host",
+      perNight: "per night",
+      verified: "Verified",
+      guests: "guests",
+      filters: {
+        showFilters: "Show filters",
+        hideFilters: "Hide filters",
+        clear: "Clear filters",
+        apply: "Apply filters",
+        priceRange: "Price range",
+        capacity: "Capacity",
+        neighborhood: "Neighborhood",
+        type: "Accommodation type",
+        verifiedHost: "Verified host",
+        minPrice: "Minimum price",
+        maxPrice: "Maximum price",
+        allNeighborhoods: "All neighborhoods",
+        allTypes: "All types"
+      },
+      types: {
+        house: "House",
+        apartment: "Apartment",
+        cabin: "Cabin",
+        room: "Room"
+      },
+      neighborhoods: {
+        centro: "Downtown",
+        cidadeVelha: "Old City",
+        ilhaDoCombu: "Combu Island",
+        nazare: "Nazaré",
+        umarizal: "Umarizal",
+        batista: "Batista Campos",
+        jurunas: "Jurunas"
+      }
     },
     features: {
       authenticStay: {

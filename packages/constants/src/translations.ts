@@ -44,11 +44,57 @@ export const translations: Record<string, Translation> = {
       title: "Hospedagens Alternativas",
       subtitle:
         "Encontre estadias autênticas com famílias locais durante a COP 30",
-      searchPlaceholder: "Buscar por bairro...",
+      searchPlaceholder: "Buscar por bairro, tipo ou host...",
       resultCount: "hospedagem encontrada",
+      resultsCount: "hospedagens encontradas",
       upTo: "Até",
       noResults: 'Nenhuma hospedagem encontrada para "{searchTerm}"',
-      viewAll: "Ver todas as hospedagens"
+      viewAll: "Ver todas as hospedagens",
+      filters: {
+        search: "Buscar",
+        neighborhood: "Bairro",
+        type: "Tipo",
+        priceRange: "Faixa de preço",
+        capacity: "Capacidade",
+        verifiedHost: "Host verificado",
+        showFilters: "Mostrar filtros",
+        hideFilters: "Ocultar filtros",
+        clear: "Limpar filtros",
+        allNeighborhoods: "Todos os bairros",
+        allTypes: "Todos os tipos",
+        allPrices: "Todas as faixas",
+        minCapacity: "Mín. pessoas"
+      },
+      priceRanges: {
+        budget: "Econômico (até R$ 80)",
+        mid: "Intermediário (R$ 80-150)",
+        premium: "Premium (R$ 150+)"
+      },
+      details: {
+        perNight: "por noite",
+        capacity: "Capacidade",
+        people: "pessoas",
+        host: "Anfitriã",
+        verified: "Verificado",
+        contactHost: "Contatar anfitriã",
+        sendMessage: "Enviar mensagem",
+        amenities: "Comodidades",
+        about: "Sobre",
+        location: "Localização",
+        contactVia: "Entrar em contato via"
+      },
+      view: {
+        list: "Ver lista",
+        map: "Ver no mapa",
+        switchToList: "Voltar para lista",
+        switchToMap: "Ver no mapa"
+      },
+      map: {
+        loading: "Carregando mapa...",
+        error: "Erro ao carregar o mapa",
+        fallbackTitle: "Hospedagens por Localização",
+        fallbackDescription: "Visualização alternativa organizada por bairros"
+      }
     },
     guides: {
       title: "Guias e Tradutores",
@@ -141,6 +187,7 @@ export const translations: Record<string, Translation> = {
         centro: "Centro",
         cidadeVelha: "Cidade Velha",
         ilhaDoCombu: "Ilha do Combu",
+        jurunas: "Jurunas",
         nazare: "Nazaré",
         umarizal: "Umarizal",
         batista: "Batista Campos"
@@ -206,11 +253,57 @@ export const translations: Record<string, Translation> = {
     stay: {
       title: "Alternative Accommodations",
       subtitle: "Find authentic stays with local families during COP 30",
-      searchPlaceholder: "Search by neighborhood...",
+      searchPlaceholder: "Search by neighborhood, type or host...",
       resultCount: "accommodation found",
+      resultsCount: "accommodations found",
       upTo: "Up to",
       noResults: 'No accommodations found for "{searchTerm}"',
-      viewAll: "View all accommodations"
+      viewAll: "View all accommodations",
+      filters: {
+        search: "Search",
+        neighborhood: "Neighborhood",
+        type: "Type",
+        priceRange: "Price range",
+        capacity: "Capacity",
+        verifiedHost: "Verified host",
+        showFilters: "Show filters",
+        hideFilters: "Hide filters",
+        clear: "Clear filters",
+        allNeighborhoods: "All neighborhoods",
+        allTypes: "All types",
+        allPrices: "All price ranges",
+        minCapacity: "Min. people"
+      },
+      priceRanges: {
+        budget: "Budget (up to $80)",
+        mid: "Mid-range ($80-150)",
+        premium: "Premium ($150+)"
+      },
+      details: {
+        perNight: "per night",
+        capacity: "Capacity",
+        people: "people",
+        host: "Host",
+        verified: "Verified",
+        contactHost: "Contact host",
+        sendMessage: "Send message",
+        amenities: "Amenities",
+        about: "About",
+        location: "Location",
+        contactVia: "Contact via"
+      },
+      view: {
+        list: "List",
+        map: "Map",
+        switchToList: "Switch to List",
+        switchToMap: "Switch to Map"
+      },
+      map: {
+        loading: "Loading map...",
+        error: "Error loading map",
+        fallbackTitle: "Accommodations by Location",
+        fallbackDescription: "Alternative view organized by neighborhoods"
+      }
     },
     guides: {
       title: "Guides & Translators",
@@ -301,8 +394,9 @@ export const translations: Record<string, Translation> = {
     listings: {
       neighborhoods: {
         centro: "Centro",
-        cidadeVelha: "Old City",
-        ilhaDoCombu: "Combu Island",
+        cidadeVelha: "Cidade Velha",
+        ilhaDoCombu: "Ilha do Combu",
+        jurunas: "Jurunas",
         nazare: "Nazaré",
         umarizal: "Umarizal",
         batista: "Batista Campos"
@@ -369,11 +463,57 @@ export const translations: Record<string, Translation> = {
       title: "Alojamientos Alternativos",
       subtitle:
         "Encuentra estadías auténticas con familias locales durante la COP 30",
-      searchPlaceholder: "Buscar por barrio...",
+      searchPlaceholder: "Buscar por barrio, tipo o anfitrión...",
       resultCount: "alojamiento encontrado",
+      resultsCount: "alojamientos encontrados",
       upTo: "Hasta",
       noResults: 'No se encontraron alojamientos para "{searchTerm}"',
-      viewAll: "Ver todos los alojamientos"
+      viewAll: "Ver todos los alojamientos",
+      filters: {
+        search: "Buscar",
+        neighborhood: "Barrio",
+        type: "Tipo",
+        priceRange: "Rango de precio",
+        capacity: "Capacidad",
+        verifiedHost: "Anfitrión verificado",
+        showFilters: "Mostrar filtros",
+        hideFilters: "Ocultar filtros",
+        clear: "Limpiar filtros",
+        allNeighborhoods: "Todos los barrios",
+        allTypes: "Todos los tipos",
+        allPrices: "Todos los rangos",
+        minCapacity: "Mín. personas"
+      },
+      priceRanges: {
+        budget: "Económico (hasta $80)",
+        mid: "Intermedio ($80-150)",
+        premium: "Premium ($150+)"
+      },
+      details: {
+        perNight: "por noche",
+        capacity: "Capacidad",
+        people: "personas",
+        host: "Anfitrión",
+        verified: "Verificado",
+        contactHost: "Contactar anfitrión",
+        sendMessage: "Enviar mensaje",
+        amenities: "Comodidades",
+        about: "Acerca de",
+        location: "Ubicación",
+        contactVia: "Contactar vía"
+      },
+      view: {
+        list: "Lista",
+        map: "Mapa",
+        switchToList: "Cambiar a Lista",
+        switchToMap: "Cambiar a Mapa"
+      },
+      map: {
+        loading: "Cargando mapa...",
+        error: "Error al cargar el mapa",
+        fallbackTitle: "Alojamientos por Ubicación",
+        fallbackDescription: "Vista alternativa organizada por barrios"
+      }
     },
     guides: {
       title: "Guías y Traductores",
@@ -464,8 +604,9 @@ export const translations: Record<string, Translation> = {
     listings: {
       neighborhoods: {
         centro: "Centro",
-        cidadeVelha: "Ciudad Vieja",
-        ilhaDoCombu: "Isla de Combu",
+        cidadeVelha: "Cidade Velha",
+        ilhaDoCombu: "Ilha do Combu",
+        jurunas: "Jurunas",
         nazare: "Nazaré",
         umarizal: "Umarizal",
         batista: "Batista Campos"

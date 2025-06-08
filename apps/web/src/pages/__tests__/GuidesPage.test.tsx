@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from "vitest";
 import { render, screen } from "../../test/test-utils";
-import GuidesPage from "../GuidesPage";
+import { GuidesPage } from "@/pages/GuidesPage";
 
 // Mock dos hooks
 vi.mock("../../hooks/useGuides", () => ({

@@ -1,23 +1,11 @@
 import React from "react";
-import {
-  Modal,
-  Badge,
-  Group,
-  Button,
-  Stack,
-  Text,
-  Divider
-} from "@mantine/core";
-import {
-  IconStar,
-  IconMessage,
-  IconMapPin,
-  IconClock
-} from "@tabler/icons-react";
+import { Badge, Group, Stack, Text, Divider } from "@mantine/core";
+import { IconMessage, IconMapPin, IconClock } from "@tabler/icons-react";
 import { TourGuide } from "../../types/guides";
 import { useLanguage } from "../../hooks/useLanguage";
 import { getCategoryIcon } from "../../constants";
 import { GuideAvatar } from "../common/GuideAvatar";
+import { BaseModal, StatusBadge, RatingDisplay, InfoRow } from "../ui";
 
 interface GuideDetailModalProps {
   guide: TourGuide;
@@ -33,12 +21,18 @@ export const GuideDetailModal: React.FC<GuideDetailModalProps> = ({
   const { t } = useLanguage();
 
   return (
-    <Modal
-      opened={isOpen}
+    <BaseModal
+      isOpen={isOpen}
       onClose={onClose}
       title={guide.name}
       size="lg"
-      centered
+      primaryAction={{
+        label: t("guides.details.contact"),
+        onClick: () => {
+          // Implementar lógica de contato
+        },
+        icon: <IconMessage size={16} />
+      }}
     >
       <Stack gap="md">
         {/* Imagem */}
@@ -60,30 +54,17 @@ export const GuideDetailModal: React.FC<GuideDetailModalProps> = ({
           </Group>
 
           {guide.rating && (
-            <Group gap={4}>
-              <IconStar
-                size={18}
-                fill="currentColor"
-                style={{ color: "#fbbf24" }}
-              />
-              <Text size="lg" fw={500}>
-                {guide.rating}
-              </Text>
-            </Group>
+            <RatingDisplay rating={guide.rating} showValue={false} size="md" />
           )}
         </Group>
 
         {/* Badges */}
         <Group gap="sm">
           {guide.free && (
-            <Badge variant="light" color="green">
-              {t("guides.details.free")}
-            </Badge>
+            <StatusBadge type="free" label={t("guides.details.free")} />
           )}
           {guide.verified && (
-            <Badge variant="light" color="blue">
-              {t("guides.details.verified")}
-            </Badge>
+            <StatusBadge type="verified" label={t("guides.details.verified")} />
           )}
         </Group>
 
@@ -130,29 +111,11 @@ export const GuideDetailModal: React.FC<GuideDetailModalProps> = ({
         )}
 
         {/* Localização (se disponível) */}
-        {guide.location && (
-          <Group gap="xs">
-            <IconMapPin
-              size={16}
-              style={{ color: "var(--mantine-color-dimmed)" }}
-            />
-            <Text size="sm" c="dimmed">
-              {guide.location}
-            </Text>
-          </Group>
-        )}
+        {guide.location && <InfoRow icon={IconMapPin} text={guide.location} />}
 
         {/* Disponibilidade (se disponível) */}
         {guide.availability && (
-          <Group gap="xs">
-            <IconClock
-              size={16}
-              style={{ color: "var(--mantine-color-dimmed)" }}
-            />
-            <Text size="sm" c="dimmed">
-              {guide.availability}
-            </Text>
-          </Group>
+          <InfoRow icon={IconClock} text={guide.availability} />
         )}
 
         {/* Preços (se disponível) */}
@@ -168,17 +131,7 @@ export const GuideDetailModal: React.FC<GuideDetailModalProps> = ({
         )}
 
         <Divider />
-
-        {/* Botões de Ação */}
-        <Group justify="space-between">
-          <Button variant="outline" onClick={onClose} style={{ flex: 1 }}>
-            {t("common.close")}
-          </Button>
-          <Button leftSection={<IconMessage size={16} />} style={{ flex: 1 }}>
-            {t("guides.details.contact")}
-          </Button>
-        </Group>
       </Stack>
-    </Modal>
+    </BaseModal>
   );
 };

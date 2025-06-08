@@ -1,185 +1,379 @@
 import React, { useState } from "react";
-import { GSTag } from "ui";
-import { mockListings, type Listing } from "../data/listings";
+import {
+  Container,
+  Title,
+  SimpleGrid,
+  Stack,
+  Group,
+  Button,
+  Badge,
+  Box,
+  Flex,
+  Paper,
+  SegmentedControl,
+  Pagination,
+  Text
+} from "@mantine/core";
+import { useMediaQuery } from "@mantine/hooks";
+import { IconHome, IconFilter, IconList, IconMap } from "@tabler/icons-react";
 import { useLanguage } from "../hooks";
-import { Button, Card, Container, Grid, Icon } from "../components/ui";
+import { StayFilters } from "../components/features/StayFilters";
+import { StayCard } from "../components/features/StayCard";
+import { StayDetailModal } from "../components/features/StayDetailModal";
+import { StayMap } from "../components/features/StayMap";
+import { useStay } from "../hooks/useStay";
 import { EmptyState } from "../components/common/EmptyState";
 import { PageLayout } from "../components/layout/PageLayout";
+import { PRICE_SLIDER_CONFIG } from "../constants";
+import type { Listing, StayFilters as StayFiltersType } from "../types/stay";
 
-interface ListingCardProps {
-  listing: Listing;
-  onCardClick: (listing: Listing) => void;
-  t: (key: string) => string;
-}
-
-const ListingCard: React.FC<ListingCardProps> = ({
-  listing,
-  onCardClick,
-  t
-}) => {
-  return (
-    <Card hover className="flex flex-col h-full">
-      {/* Image */}
-      <div
-        className="relative h-48 bg-cover bg-center rounded-t-lg cursor-pointer overflow-hidden"
-        style={{ backgroundImage: `url(${listing.imageUrl})` }}
-        onClick={() => onCardClick(listing)}
-      >
-        <div className="absolute inset-0 bg-black bg-opacity-20 flex items-end p-4">
-          <div>
-            <h3 className="text-white font-bold text-lg">{listing.title}</h3>
-            <p className="text-gray-200 text-sm">{listing.subtitle}</p>
-          </div>
-        </div>
-      </div>
-
-      {/* Content */}
-      <div className="flex-1 p-4">
-        <div className="flex items-center justify-between mb-3">
-          <GSTag label={listing.neighborhood} variant="info" size="sm" />
-          <span className="text-lg font-bold text-cop-green-600 dark:text-cop-green-400">
-            {listing.currency}
-            {listing.price}/{t("common.night")}
-          </span>
-        </div>
-
-        <p className="text-gray-600 text-sm mb-4 line-clamp-2 dark:text-gray-300">
-          {listing.description}
-        </p>
-
-        <div className="flex items-center justify-between mb-3">
-          <span className="text-sm text-gray-500 dark:text-gray-400">
-            {t("stay.upTo")} {listing.capacity} {t("common.person")}
-          </span>
-
-          <div className="flex items-center space-x-1">
-            <span className="text-sm text-gray-500 dark:text-gray-400">
-              {t("common.by")}
-            </span>
-            <span className="text-sm font-medium text-gray-700 dark:text-gray-200">
-              {listing.host.name}
-            </span>
-            {listing.host.verified && (
-              <GSTag label="✓" variant="success" size="sm" />
-            )}
-          </div>
-        </div>
-
-        {/* Amenities */}
-        <div className="flex flex-wrap gap-1 mb-4">
-          {listing.amenities.slice(0, 3).map((amenity, index) => (
-            <GSTag key={index} label={amenity} variant="gray" size="sm" />
-          ))}
-          {listing.amenities.length > 3 && (
-            <GSTag
-              label={`+${listing.amenities.length - 3}`}
-              variant="gray"
-              size="sm"
-            />
-          )}
-        </div>
-
-        {/* Action Button */}
-        <Button
-          onClick={() => onCardClick(listing)}
-          variant="primary"
-          size="sm"
-          className="w-full"
-        >
-          {t("common.viewDetails")}
-        </Button>
-      </div>
-    </Card>
-  );
-};
+type ViewMode = "list" | "map";
 
 export const StayPage: React.FC = () => {
   const { t } = useLanguage();
-  const [searchTerm, setSearchTerm] = useState("");
-  const [filteredListings, setFilteredListings] =
-    useState<Listing[]>(mockListings);
+  const isMobile = useMediaQuery("(max-width: 768px)");
+  const isTablet = useMediaQuery("(max-width: 1024px)");
+  const [selectedStay, setSelectedStay] = useState<Listing | null>(null);
+  const [showMobileFilters, setShowMobileFilters] = useState(false);
+  const [viewMode, setViewMode] = useState<ViewMode>("list");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [filters, setFilters] = useState<StayFiltersType>({
+    search: "",
+    neighborhood: null,
+    type: [],
+    priceRange: PRICE_SLIDER_CONFIG.defaultValue,
+    capacity: 1,
+    verifiedHost: false
+  });
 
-  const handleSearch = (term: string) => {
-    setSearchTerm(term);
-    if (term.trim() === "") {
-      setFilteredListings(mockListings);
-    } else {
-      const filtered = mockListings.filter(
-        (listing) =>
-          listing.neighborhood.toLowerCase().includes(term.toLowerCase()) ||
-          listing.title.toLowerCase().includes(term.toLowerCase())
-      );
-      setFilteredListings(filtered);
-    }
+  const { filteredListings, totalListings, totalPages } = useStay({
+    filters,
+    currentPage,
+    itemsPerPage: 6
+  });
+
+  const handleFilterChange = (newFilters: StayFiltersType) => {
+    setFilters(newFilters);
+    setCurrentPage(1);
   };
 
-  const handleCardClick = (_listing: Listing) => {
-    // TODO: Implementar navegação para página de detalhes
+  const clearFilters = () => {
+    setFilters({
+      search: "",
+      neighborhood: null,
+      type: [],
+      priceRange: PRICE_SLIDER_CONFIG.defaultValue,
+      capacity: 1,
+      verifiedHost: false
+    });
+  };
+
+  const getActiveFiltersCount = () => {
+    let count = 0;
+    if (filters.search !== "") count++;
+    if (filters.neighborhood !== null) count++;
+    if (filters.type.length > 0) count++;
+    if (
+      filters.priceRange[0] !== PRICE_SLIDER_CONFIG.defaultValue[0] ||
+      filters.priceRange[1] !== PRICE_SLIDER_CONFIG.defaultValue[1]
+    )
+      count++;
+    if (filters.capacity > 1) count++;
+    if (filters.verifiedHost) count++;
+    return count;
   };
 
   return (
     <PageLayout title={t("stay.title")} subtitle={t("stay.subtitle")}>
-      <Container size="lg" className="py-8">
-        {/* Search */}
-        <div className="max-w-md mx-auto mb-8">
-          <div className="relative">
-            <Icon
-              name="search"
-              className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5"
-            />
-            <input
-              type="text"
-              placeholder={t("stay.searchPlaceholder")}
-              value={searchTerm}
-              onChange={(e) => handleSearch(e.target.value)}
-              className="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-cop-green-500 focus:border-transparent text-gray-900 text-base dark:bg-gray-800 dark:border-gray-600 dark:text-white dark:placeholder-gray-400"
-            />
-          </div>
-        </div>
+      <Container
+        size="xl"
+        py="xl"
+        style={{ maxWidth: isMobile ? "100%" : "100%" }}
+      >
+        <Flex gap={isMobile ? "md" : "xl"} align="flex-start">
+          {!isMobile && (
+            <Box
+              style={{
+                minWidth: isTablet ? 280 : 320,
+                width: isTablet ? 280 : 320,
+                flexShrink: 0
+              }}
+            >
+              <Paper
+                withBorder
+                p={isTablet ? "md" : "lg"}
+                radius="md"
+                style={{
+                  position: "sticky",
+                  top: 20,
+                  height: "fit-content",
+                  maxHeight: "calc(100vh - 40px)",
+                  overflowY: "auto"
+                }}
+              >
+                <StayFilters
+                  filters={filters}
+                  onFiltersChange={handleFilterChange}
+                  onClear={clearFilters}
+                  variant="sidebar"
+                />
+              </Paper>
+            </Box>
+          )}
 
-        {/* Results Count */}
-        {searchTerm && (
-          <div className="mb-6">
-            <p className="text-gray-600 dark:text-gray-300 text-center">
-              {filteredListings.length} {t("stay.resultCount")}
-            </p>
-          </div>
-        )}
+          <Box style={{ flex: 1, minWidth: 0 }}>
+            <Stack gap="xl">
+              <Group
+                justify="space-between"
+                align="flex-start"
+                wrap="nowrap"
+                gap="md"
+              >
+                <Stack gap={4} style={{ flex: 1, minWidth: 0 }}>
+                  <Group gap="sm">
+                    <IconHome size={24} color="var(--mantine-color-blue-6)" />
+                    <Title
+                      order={2}
+                      size={isMobile ? "h4" : "h3"}
+                      style={{
+                        whiteSpace: isMobile ? "normal" : "nowrap",
+                        lineHeight: isMobile ? 1.2 : 1.4
+                      }}
+                    >
+                      {isMobile ? "Hospedagens" : "Hospedagens Alternativas"}
+                    </Title>
+                  </Group>
 
-        {/* Listings Grid */}
-        {filteredListings.length > 0 ? (
-          <Grid
-            cols={1}
-            gap="lg"
-            responsive={{
-              md: 2,
-              lg: 3
-            }}
-          >
-            {filteredListings.map((listing) => (
-              <ListingCard
-                key={listing.id}
-                listing={listing}
-                onCardClick={handleCardClick}
-                t={t}
-              />
-            ))}
-          </Grid>
-        ) : (
-          <div className="text-center py-12">
-            <EmptyState
-              icon="🏠"
-              title={t("stay.noResults")}
-              description="Tente buscar por outros termos ou remova os filtros"
-            />
-            <div className="mt-6">
-              <Button onClick={() => handleSearch("")} variant="primary">
-                {t("stay.viewAll")}
-              </Button>
-            </div>
-          </div>
-        )}
+                  {isMobile && (
+                    <Badge
+                      color="gray"
+                      variant="dot"
+                      size="sm"
+                      style={{ alignSelf: "flex-start" }}
+                    >
+                      {totalListings}{" "}
+                      {totalListings === 1 ? "resultado" : "resultados"}
+                    </Badge>
+                  )}
+
+                  {!isMobile && (
+                    <Badge
+                      color="blue"
+                      variant="light"
+                      size="md"
+                      style={{ alignSelf: "flex-start", marginTop: 4 }}
+                    >
+                      {totalListings}{" "}
+                      {totalListings === 1 ? "resultado" : "resultados"}
+                    </Badge>
+                  )}
+                </Stack>
+
+                <Group gap="md" wrap="nowrap">
+                  {!isMobile && (
+                    <SegmentedControl
+                      value={viewMode}
+                      onChange={(value) => setViewMode(value as ViewMode)}
+                      data={[
+                        {
+                          value: "list",
+                          label: (
+                            <Group gap="xs" wrap="nowrap">
+                              <IconList size={16} />
+                              <span>{t("stay.view.list")}</span>
+                            </Group>
+                          )
+                        },
+                        {
+                          value: "map",
+                          label: (
+                            <Group gap="xs" wrap="nowrap">
+                              <IconMap size={16} />
+                              <span>{t("stay.view.map")}</span>
+                            </Group>
+                          )
+                        }
+                      ]}
+                      size="md"
+                      radius="lg"
+                      styles={(theme) => ({
+                        root: {
+                          boxShadow: theme.shadows.xs
+                        },
+                        control: {
+                          transition: "all 0.2s ease",
+                          "&:hover": {
+                            transform: "translateY(-1px)"
+                          }
+                        },
+                        indicator: {
+                          background: `linear-gradient(45deg, ${theme.colors.blue[5]}, ${theme.colors.blue[7]})`,
+                          transition:
+                            "all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)"
+                        }
+                      })}
+                    />
+                  )}
+
+                  {isMobile && (
+                    <Stack gap="xs" align="flex-end" style={{ flexShrink: 0 }}>
+                      <Group gap="xs" wrap="nowrap">
+                        <Button
+                          variant="light"
+                          size="sm"
+                          leftSection={<IconMap size={16} />}
+                          onClick={() =>
+                            setViewMode(viewMode === "map" ? "list" : "map")
+                          }
+                        >
+                          {viewMode === "map" ? "Lista" : "Mapa"}
+                        </Button>
+
+                        <Button
+                          variant={showMobileFilters ? "filled" : "light"}
+                          leftSection={<IconFilter size={16} />}
+                          onClick={() =>
+                            setShowMobileFilters(!showMobileFilters)
+                          }
+                          size="sm"
+                        >
+                          Filtros
+                        </Button>
+                      </Group>
+
+                      {getActiveFiltersCount() > 0 && (
+                        <Badge color="blue" variant="light" size="sm">
+                          {getActiveFiltersCount()} filtro
+                          {getActiveFiltersCount() > 1 ? "s" : ""} ativo
+                          {getActiveFiltersCount() > 1 ? "s" : ""}
+                        </Badge>
+                      )}
+                    </Stack>
+                  )}
+                </Group>
+              </Group>
+
+              {filteredListings.length > 0 ? (
+                <Box style={{ position: "relative", minHeight: "600px" }}>
+                  {viewMode === "list" ? (
+                    <Stack gap="xl">
+                      <Box
+                        style={{
+                          opacity: 1,
+                          transition: "opacity 0.3s ease-in-out",
+                          position: "relative",
+                          zIndex: 1
+                        }}
+                      >
+                        <SimpleGrid
+                          cols={{
+                            base: 1,
+                            sm: 1,
+                            md: isMobile ? 1 : 2,
+                            lg: 2,
+                            xl: isTablet ? 2 : 3
+                          }}
+                          spacing="lg"
+                          verticalSpacing="lg"
+                        >
+                          {filteredListings.map((listing) => (
+                            <StayCard
+                              key={listing.id}
+                              listing={listing}
+                              onClick={() => setSelectedStay(listing)}
+                            />
+                          ))}
+                        </SimpleGrid>
+                      </Box>
+
+                      {totalPages > 1 && (
+                        <Stack gap="sm" align="center">
+                          <Text size="sm" c="dimmed" ta="center">
+                            Mostrando {(currentPage - 1) * 6 + 1}-
+                            {Math.min(currentPage * 6, totalListings)} de{" "}
+                            {totalListings}{" "}
+                            {totalListings === 1 ? "resultado" : "resultados"}
+                          </Text>
+
+                          <Pagination
+                            value={currentPage}
+                            onChange={setCurrentPage}
+                            total={totalPages}
+                            size={isMobile ? "sm" : "md"}
+                            withEdges={!isMobile}
+                            siblings={isMobile ? 1 : 2}
+                            boundaries={isMobile ? 1 : 2}
+                            styles={(theme) => ({
+                              control: {
+                                "&[data-active]": {
+                                  backgroundColor: theme.colors.blue[6],
+                                  borderColor: theme.colors.blue[6]
+                                },
+                                "&:hover:not([data-active])": {
+                                  backgroundColor: theme.colors.gray[1]
+                                }
+                              }
+                            })}
+                          />
+                        </Stack>
+                      )}
+                    </Stack>
+                  ) : (
+                    <Box
+                      style={{
+                        height: "600px",
+                        width: "100%",
+                        opacity: 1,
+                        transition: "opacity 0.3s ease-in-out",
+                        borderRadius: "12px",
+                        overflow: "hidden",
+                        boxShadow: "var(--mantine-shadow-sm)"
+                      }}
+                    >
+                      <StayMap
+                        listings={filteredListings}
+                        onListingClick={setSelectedStay}
+                        selectedListing={selectedStay}
+                      />
+                    </Box>
+                  )}
+                </Box>
+              ) : (
+                <Stack align="center" py={80} gap="md">
+                  <EmptyState
+                    icon="🏠"
+                    title={t("stay.noResults").replace(
+                      '"{searchTerm}"',
+                      filters.search || "filtros selecionados"
+                    )}
+                    description="Tente ajustar os filtros ou buscar por outros termos"
+                  />
+                  <Button onClick={clearFilters} variant="light">
+                    {t("stay.filters.clear")}
+                  </Button>
+                </Stack>
+              )}
+            </Stack>
+          </Box>
+        </Flex>
       </Container>
+
+      {isMobile && (
+        <StayFilters
+          filters={filters}
+          onFiltersChange={handleFilterChange}
+          onClear={clearFilters}
+          opened={showMobileFilters}
+          onClose={() => setShowMobileFilters(false)}
+          variant="drawer"
+        />
+      )}
+
+      <StayDetailModal
+        listing={selectedStay}
+        opened={!!selectedStay}
+        onClose={() => setSelectedStay(null)}
+      />
     </PageLayout>
   );
 };

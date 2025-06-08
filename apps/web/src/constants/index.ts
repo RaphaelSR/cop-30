@@ -120,3 +120,55 @@ export const BREAKPOINTS = {
   lg: 1200,
   xl: 1400
 } as const;
+
+// Stay Constants
+export const STAY_TYPES = [
+  { id: "house", name: "Casa", iconName: "🏠" },
+  { id: "apartment", name: "Apartamento", iconName: "🏢" },
+  { id: "cabin", name: "Cabana", iconName: "🏕️" },
+  { id: "room", name: "Quarto", iconName: "🛏️" }
+] as const;
+
+export const NEIGHBORHOODS = [
+  { id: "cidadeVelha", name: "Cidade Velha" },
+  { id: "centro", name: "Centro" },
+  { id: "nazare", name: "Nazaré" },
+  { id: "umarizal", name: "Umarizal" },
+  { id: "batista", name: "Batista Campos" },
+  { id: "jurunas", name: "Jurunas" },
+  { id: "ilhaDoCombu", name: "Ilha do Combu" }
+] as const;
+
+export const PRICE_RANGES = [
+  { id: "budget", min: 30, max: 80, label: "Econômico (R$ 30-80)" },
+  { id: "mid", min: 80, max: 150, label: "Intermediário (R$ 80-150)" },
+  { id: "premium", min: 150, max: 300, label: "Premium (R$ 150-300)" },
+  { id: "luxury", min: 300, max: 2000, label: "Luxo (R$ 300+)" }
+] as const;
+
+// Price slider configuration
+export const PRICE_SLIDER_CONFIG = {
+  min: 100,
+  max: 1000,
+  step: 50,
+  defaultValue: [100, 400] as [number, number],
+  marks: [
+    { value: 100, label: "R$ 100" },
+    { value: 250, label: "R$ 250" },
+    { value: 400, label: "R$ 400" },
+    { value: 600, label: "R$ 600" },
+    { value: 800, label: "R$ 800" },
+    { value: 1000, label: "R$ 1000" }
+  ]
+};
+
+// Helper functions
+export const getStayTypeIcon = (type: string): string => {
+  const stayType = STAY_TYPES.find((t) => t.id === type);
+  return stayType?.iconName || "🏠";
+};
+
+export const getNeighborhoodName = (id: string): string => {
+  const neighborhood = NEIGHBORHOODS.find((n) => n.id === id);
+  return neighborhood?.name || id;
+};

@@ -47,9 +47,55 @@ export interface Translation {
     subtitle: string;
     searchPlaceholder: string;
     resultCount: string;
+    resultsCount: string;
     upTo: string;
     noResults: string;
     viewAll: string;
+    filters: {
+      search: string;
+      neighborhood: string;
+      type: string;
+      priceRange: string;
+      capacity: string;
+      verifiedHost: string;
+      showFilters: string;
+      hideFilters: string;
+      clear: string;
+      allNeighborhoods: string;
+      allTypes: string;
+      allPrices: string;
+      minCapacity: string;
+    };
+    priceRanges: {
+      budget: string;
+      mid: string;
+      premium: string;
+    };
+    details: {
+      perNight: string;
+      capacity: string;
+      people: string;
+      host: string;
+      verified: string;
+      contactHost: string;
+      sendMessage: string;
+      amenities: string;
+      about: string;
+      location: string;
+      contactVia: string;
+    };
+    view: {
+      list: string;
+      map: string;
+      switchToList: string;
+      switchToMap: string;
+    };
+    map: {
+      loading: string;
+      error: string;
+      fallbackTitle: string;
+      fallbackDescription: string;
+    };
   };
 
   // Guides Page
@@ -146,6 +192,7 @@ export interface Translation {
       centro: string;
       cidadeVelha: string;
       ilhaDoCombu: string;
+      jurunas: string;
       nazare: string;
       umarizal: string;
       batista: string;

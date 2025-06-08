@@ -1,19 +1,12 @@
 import React, { useState } from "react";
-import {
-  Container,
-  SimpleGrid,
-  Title,
-  Text,
-  Center,
-  Card,
-  Box
-} from "@mantine/core";
+import { SimpleGrid, Title, Text, Center, Card, Box } from "@mantine/core";
 import GuideFilters from "../components/features/GuideFilters";
 import { GuideCard } from "../components/features/GuideCard";
 import { GuideDetailModal } from "../components/features/GuideDetailModal";
 import { useGuides } from "../hooks/useGuides";
 import { useLanguage } from "../hooks/useLanguage";
 import { TourGuide, GuideFilters as GuideFiltersType } from "../types/guides";
+import { PageLayout } from "../components/layout/PageLayout";
 
 const GuidesPage: React.FC = () => {
   const { t } = useLanguage();
@@ -71,7 +64,7 @@ const GuidesPage: React.FC = () => {
   };
 
   return (
-    <Container size="lg" style={{ paddingTop: "2rem", paddingBottom: "2rem" }}>
+    <PageLayout title={t("events.title")} subtitle={t("events.subtitle")}>
       <Box mb="xl">
         <Title order={1} ta="center" mb="md">
           {t("guides.title")}
@@ -124,7 +117,7 @@ const GuidesPage: React.FC = () => {
           onClose={handleCloseModal}
         />
       )}
-    </Container>
+    </PageLayout>
   );
 };
 

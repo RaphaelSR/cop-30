@@ -1,3 +1,4 @@
-export { useTheme, ThemeProvider } from "./useTheme.tsx";
-export { useLanguage, LanguageProvider } from "./useLanguage.tsx";
+export { useLanguage, LanguageProvider } from "./useLanguage";
+export { useTheme, ThemeProvider } from "./useTheme";
 export { useGuides } from "./useGuides";
+export { useStay } from "./useStay";

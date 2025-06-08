@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { useState } from "react";
-import { useLanguage } from "../hooks";
+import { useLanguage } from "@/hooks";
 import LanguageThemeSelector from "./LanguageThemeSelector";
 import { Container } from "./ui";
 

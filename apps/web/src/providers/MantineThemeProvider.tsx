@@ -1,5 +1,5 @@
 import { MantineProvider, createTheme } from "@mantine/core";
-import { useTheme } from "../hooks/useTheme";
+import { useTheme } from "@/hooks/useTheme";
 
 interface MantineThemeProviderProps {
   children: React.ReactNode;

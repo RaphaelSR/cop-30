@@ -10,7 +10,7 @@ import {
   type LanguageInfo,
   languages,
   STORAGE_KEYS
-} from "../constants/language";
+} from "@/constants/language";
 import { translations } from "../../../../packages/constants/src/translations";
 
 interface LanguageContextType {

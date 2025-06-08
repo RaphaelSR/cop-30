@@ -16,16 +16,16 @@ import {
 } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import { IconHome, IconFilter, IconList, IconMap } from "@tabler/icons-react";
-import { useLanguage } from "../hooks";
-import { StayFilters } from "../components/features/StayFilters";
-import { StayCard } from "../components/features/StayCard";
-import { StayDetailModal } from "../components/features/StayDetailModal";
-import { StayMap } from "../components/features/StayMap";
-import { useStay } from "../hooks/useStay";
-import { EmptyState } from "../components/common/EmptyState";
-import { PageLayout } from "../components/layout/PageLayout";
-import { PRICE_SLIDER_CONFIG } from "../constants";
-import type { Listing, StayFilters as StayFiltersType } from "../types/stay";
+import { useLanguage } from "@/hooks";
+import { StayFilters } from "@/components/features/StayFilters";
+import { StayCard } from "@/components/features/StayCard";
+import { StayDetailModal } from "@/components/features/StayDetailModal";
+import { StayMap } from "@/components/features/StayMap";
+import { useStay } from "@/hooks/useStay";
+import { EmptyState } from "@/components/common/EmptyState";
+import { PageLayout } from "@/components/layout/PageLayout";
+import { PRICE_SLIDER_CONFIG } from "@/constants";
+import type { Listing, StayFilters as StayFiltersType } from "@/types/stay";
 
 type ViewMode = "list" | "map";
 
@@ -37,35 +37,27 @@ export const StayPage: React.FC = () => {
   const [showMobileFilters, setShowMobileFilters] = useState(false);
   const [viewMode, setViewMode] = useState<ViewMode>("list");
   const [currentPage, setCurrentPage] = useState(1);
-  const [filters, setFilters] = useState<StayFiltersType>({
-    search: "",
-    neighborhood: null,
-    type: [],
-    priceRange: PRICE_SLIDER_CONFIG.defaultValue,
-    capacity: 1,
-    verifiedHost: false
-  });
 
-  const { filteredListings, totalListings, totalPages } = useStay({
+  const {
+    filteredListings,
+    totalListings,
+    totalPages,
     filters,
+    updateFilters,
+    clearFilters
+  } = useStay({
     currentPage,
     itemsPerPage: 6
   });
 
   const handleFilterChange = (newFilters: StayFiltersType) => {
-    setFilters(newFilters);
+    updateFilters(newFilters);
     setCurrentPage(1);
   };
 
-  const clearFilters = () => {
-    setFilters({
-      search: "",
-      neighborhood: null,
-      type: [],
-      priceRange: PRICE_SLIDER_CONFIG.defaultValue,
-      capacity: 1,
-      verifiedHost: false
-    });
+  const handleClearFilters = () => {
+    clearFilters();
+    setCurrentPage(1);
   };
 
   const getActiveFiltersCount = () => {
@@ -114,7 +106,7 @@ export const StayPage: React.FC = () => {
                 <StayFilters
                   filters={filters}
                   onFiltersChange={handleFilterChange}
-                  onClear={clearFilters}
+                  onClear={handleClearFilters}
                   variant="sidebar"
                 />
               </Paper>
@@ -348,7 +340,7 @@ export const StayPage: React.FC = () => {
                     )}
                     description="Tente ajustar os filtros ou buscar por outros termos"
                   />
-                  <Button onClick={clearFilters} variant="light">
+                  <Button onClick={handleClearFilters} variant="light">
                     {t("stay.filters.clear")}
                   </Button>
                 </Stack>
@@ -362,7 +354,7 @@ export const StayPage: React.FC = () => {
         <StayFilters
           filters={filters}
           onFiltersChange={handleFilterChange}
-          onClear={clearFilters}
+          onClear={handleClearFilters}
           opened={showMobileFilters}
           onClose={() => setShowMobileFilters(false)}
           variant="drawer"

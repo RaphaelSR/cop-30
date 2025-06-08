@@ -3,9 +3,9 @@ import { ReactElement } from "react";
 import { BrowserRouter } from "react-router-dom";
 import userEvent from "@testing-library/user-event";
 import { vi } from "vitest";
-import { LanguageProvider } from "../hooks/useLanguage";
-import { ThemeProvider } from "../hooks/useTheme";
-import { MantineThemeProvider } from "../providers/MantineThemeProvider";
+import { LanguageProvider } from "@/hooks/useLanguage";
+import { ThemeProvider } from "@/hooks/useTheme";
+import { MantineThemeProvider } from "@/providers/MantineThemeProvider";
 
 /**
  * Wrapper customizado para testes que inclui todos os providers necessários

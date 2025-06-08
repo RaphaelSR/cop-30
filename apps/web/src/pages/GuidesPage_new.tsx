@@ -8,13 +8,18 @@ import { useLanguage } from "@/hooks/useLanguage";
 import { TourGuide, GuideFilters as GuideFiltersType } from "@/types/guides";
 import { PageLayout } from "@/components/layout/PageLayout";
 
-export const GuidesPage: React.FC = () => {
+const GuidesPage: React.FC = () => {
   const { t } = useLanguage();
   const { guides, filters, updateFilters, resultsCount } = useGuides();
   const [selectedGuide, setSelectedGuide] = useState<TourGuide | null>(null);
 
   const handleGuideViewDetails = (guide: TourGuide) => {
     setSelectedGuide(guide);
+  };
+
+  const handleGuideContact = (guide: TourGuide) => {
+    // Implementar lógica de contato (WhatsApp, email, etc.)
+    console.log("Contatar guia:", guide);
   };
 
   const handleCloseModal = () => {
@@ -66,6 +71,7 @@ export const GuidesPage: React.FC = () => {
               key={guide.id}
               guide={guide}
               onViewDetails={handleGuideViewDetails}
+              onContact={handleGuideContact}
             />
           ))}
         </SimpleGrid>

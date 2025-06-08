@@ -1,16 +1,13 @@
 import { useState } from "react";
 import {
-  Card,
-  TextInput,
-  Button,
-  Group,
-  Stack,
-  Chip,
-  Collapse,
-  Box,
-  Text
-} from "@mantine/core";
-import { IconSearch, IconFilter, IconX } from "@tabler/icons-react";
+  FilterSearch,
+  FilterGroup,
+  FilterChipGroup,
+  FilterToggle,
+  FilterActions
+} from "../ui";
+import { Group, Text, Collapse, Card, Stack, Button } from "@mantine/core";
+import { IconFilter } from "@tabler/icons-react";
 import { GuideFilters as GuideFiltersType } from "../../types/guides";
 import { useLanguage } from "../../hooks/useLanguage";
 
@@ -37,7 +34,9 @@ export function GuideFilters({
   const [isExpanded, setIsExpanded] = useState(false);
 
   const hasActiveFilters =
-    filters.category || filters.free || filters.languages.length > 0;
+    Boolean(filters.category) ||
+    Boolean(filters.free) ||
+    filters.languages.length > 0;
 
   const handleSearchChange = (value: string) => {
     onFiltersChange({ ...filters, search: value });
@@ -48,17 +47,13 @@ export function GuideFilters({
     onFiltersChange({ ...filters, category: category || null });
   };
 
-  const handleFreeToggle = () => {
-    onFiltersChange({ ...filters, free: !filters.free });
+  const handleLanguageChange = (value: string | string[]) => {
+    const languages = Array.isArray(value) ? value : [value];
+    onFiltersChange({ ...filters, languages });
   };
 
-  const handleLanguageToggle = (language: string) => {
-    const currentLanguages = filters.languages;
-    const newLanguages = currentLanguages.includes(language)
-      ? currentLanguages.filter((l) => l !== language)
-      : [...currentLanguages, language];
-
-    onFiltersChange({ ...filters, languages: newLanguages });
+  const handleFreeToggle = (checked: boolean) => {
+    onFiltersChange({ ...filters, free: checked || undefined });
   };
 
   const clearFilters = () => {
@@ -70,36 +65,41 @@ export function GuideFilters({
     });
   };
 
-  const availableLanguages = ["Português", "English", "Español", "Français"];
+  const categoryOptions = GUIDE_CATEGORIES.map((cat) => ({
+    id: cat.id,
+    label: cat.label
+  }));
+
+  const languageOptions = ["Português", "English", "Español", "Français"].map(
+    (lang) => ({
+      id: lang,
+      label: lang
+    })
+  );
 
   return (
     <Card shadow="sm" padding="md" radius="md" withBorder>
       <Stack gap="md">
-        {/* Busca */}
-        <TextInput
-          placeholder={t("guides.searchPlaceholder")}
-          value={filters.search}
-          onChange={(e) => handleSearchChange(e.target.value)}
-          leftSection={<IconSearch size={16} />}
+        <FilterSearch
+          placeholder={t("guides.searchPlaceholder") || "Buscar guias..."}
+          value={filters.search || ""}
+          onChange={handleSearchChange}
         />
 
-        {/* Resultados e Filtro Gratuito */}
         <Group justify="space-between">
           <Text size="sm" c="dimmed">
-            {t("guides.resultsCount").replace(
+            {t("guides.resultsCount")?.replace(
               "{{count}}",
               totalResults.toString()
-            )}
+            ) || `${totalResults} resultados`}
           </Text>
 
           <Group gap="sm">
-            <Button
-              variant={filters.free ? "filled" : "outline"}
-              size="sm"
-              onClick={handleFreeToggle}
-            >
-              {t("guides.filters.onlyFree")}
-            </Button>
+            <FilterToggle
+              label={t("guides.filters.onlyFree") || "Apenas gratuitos"}
+              checked={Boolean(filters.free)}
+              onChange={handleFreeToggle}
+            />
 
             <Button
               variant="light"
@@ -108,68 +108,44 @@ export function GuideFilters({
               onClick={() => setIsExpanded(!isExpanded)}
             >
               {isExpanded
-                ? t("guides.filters.hideFilters")
-                : t("guides.filters.showFilters")}
+                ? t("guides.filters.hideFilters") || "Ocultar filtros"
+                : t("guides.filters.showFilters") || "Mostrar filtros"}
             </Button>
           </Group>
         </Group>
 
-        {/* Filtros Expandidos */}
         <Collapse in={isExpanded}>
           <Stack gap="md">
-            {/* Categorias */}
-            <Box>
-              <Text size="sm" fw={600} mb="xs">
-                {t("guides.filters.categories")}
-              </Text>
-              <Chip.Group
-                value={filters.category || ""}
+            <FilterGroup label={t("guides.filters.categories") || "Categorias"}>
+              <FilterChipGroup
+                label=""
+                options={categoryOptions}
+                value={filters.category ? [filters.category] : []}
                 onChange={handleCategoryChange}
-              >
-                <Group gap="xs">
-                  {GUIDE_CATEGORIES.map((category) => (
-                    <Chip key={category.id} value={category.id} size="sm">
-                      {category.label}
-                    </Chip>
-                  ))}
-                </Group>
-              </Chip.Group>
-            </Box>
+                multiple={false}
+              />
+            </FilterGroup>
 
-            {/* Idiomas */}
-            <Box>
-              <Text size="sm" fw={600} mb="xs">
-                {t("guides.filters.languages")}
-              </Text>
-              <Group gap="xs">
-                {availableLanguages.map((language) => (
-                  <Chip
-                    key={language}
-                    checked={filters.languages.includes(language)}
-                    onChange={() => handleLanguageToggle(language)}
-                    size="sm"
-                  >
-                    {language}
-                  </Chip>
-                ))}
-              </Group>
-            </Box>
+            <FilterGroup label={t("guides.filters.languages") || "Idiomas"}>
+              <FilterChipGroup
+                label=""
+                options={languageOptions}
+                value={filters.languages}
+                onChange={handleLanguageChange}
+                multiple={true}
+              />
+            </FilterGroup>
+
+            {hasActiveFilters && (
+              <FilterActions
+                onClear={clearFilters}
+                clearLabel={t("guides.filters.clear") || "Limpar"}
+                hasActiveFilters={hasActiveFilters}
+                variant="sidebar"
+              />
+            )}
           </Stack>
         </Collapse>
-
-        {/* Limpar Filtros */}
-        {hasActiveFilters && (
-          <Group justify="center">
-            <Button
-              variant="subtle"
-              size="sm"
-              leftSection={<IconX size={16} />}
-              onClick={clearFilters}
-            >
-              {t("guides.filters.clear")}
-            </Button>
-          </Group>
-        )}
       </Stack>
     </Card>
   );

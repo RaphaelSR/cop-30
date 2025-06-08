@@ -1,12 +1,12 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Header from "./components/Header";
-import { LandingPage } from "./pages/LandingPage";
-import { StayPage } from "./pages/StayPage";
-import GuidesPage from "./pages/GuidesPage";
-import EventsPage from "./pages/EventsPage";
-import ExplorePage from "./pages/ExplorePage";
-import { ThemeProvider, LanguageProvider } from "./hooks";
-import { MantineThemeProvider } from "./providers/MantineThemeProvider";
+import Header from "@/components/Header";
+import { LandingPage } from "@/pages/LandingPage";
+import { StayPage } from "@/pages/StayPage";
+import { GuidesPage } from "@/pages/GuidesPage";
+import EventsPage from "@/pages/EventsPage";
+import ExplorePage from "@/pages/ExplorePage";
+import { ThemeProvider, LanguageProvider } from "@/hooks";
+import { MantineThemeProvider } from "@/providers/MantineThemeProvider";
 
 function App() {
   const basename = import.meta.env.PROD ? "/cop-30" : "";

@@ -1,10 +1,8 @@
 import React from "react";
 import {
-  Modal,
   Image,
   Text,
   Badge,
-  Button,
   Group,
   Stack,
   Avatar,
@@ -12,16 +10,12 @@ import {
   SimpleGrid,
   Paper
 } from "@mantine/core";
-import {
-  IconCheck,
-  IconMapPin,
-  IconUsers,
-  IconBrandWhatsapp
-} from "@tabler/icons-react";
+import { IconMapPin, IconUsers, IconBrandWhatsapp } from "@tabler/icons-react";
 import { type Listing } from "../../types/stay";
 import { useLanguage } from "../../hooks/useLanguage";
 import { getStayTypeIcon } from "../../constants";
 import { ImageCarousel } from "../ui/ImageCarousel";
+import { BaseModal, StatusBadge } from "../ui";
 
 interface StayDetailModalProps {
   listing: Listing | null;
@@ -43,14 +37,26 @@ export const StayDetailModal: React.FC<StayDetailModalProps> = ({
   };
 
   return (
-    <Modal
-      opened={opened}
+    <BaseModal
+      isOpen={opened}
       onClose={onClose}
       title={listing.title}
       size="lg"
-      centered
-      styles={{
-        content: { maxHeight: "90vh", overflow: "auto" }
+      primaryAction={{
+        label: t("stay.details.contactHost"),
+        onClick: () => {
+          const message = encodeURIComponent(
+            `Olá ${listing.host.name}! Tenho interesse na hospedagem "${listing.title}" durante a COP 30. Poderia me passar mais informações?`
+          );
+          window.open(
+            `https://wa.me/${formatWhatsApp(
+              listing.host.whatsapp
+            )}?text=${message}`,
+            "_blank"
+          );
+        },
+        icon: <IconBrandWhatsapp size={20} />,
+        variant: "filled"
       }}
     >
       <Stack gap="md">
@@ -143,13 +149,11 @@ export const StayDetailModal: React.FC<StayDetailModalProps> = ({
                   {listing.host.name}
                 </Text>
                 {listing.host.verified && (
-                  <Badge
+                  <StatusBadge
+                    type="verified"
+                    label={t("stay.details.verified")}
                     size="sm"
-                    color="green"
-                    leftSection={<IconCheck size={10} />}
-                  >
-                    {t("stay.details.verified")}
-                  </Badge>
+                  />
                 )}
               </Group>
 
@@ -192,31 +196,11 @@ export const StayDetailModal: React.FC<StayDetailModalProps> = ({
             {t("stay.details.contactVia")}
           </Text>
 
-          <Button
-            fullWidth
-            size="lg"
-            leftSection={<IconBrandWhatsapp size={20} />}
-            color="green"
-            onClick={() => {
-              const message = encodeURIComponent(
-                `Olá ${listing.host.name}! Tenho interesse na hospedagem "${listing.title}" durante a COP 30. Poderia me passar mais informações?`
-              );
-              window.open(
-                `https://wa.me/${formatWhatsApp(
-                  listing.host.whatsapp
-                )}?text=${message}`,
-                "_blank"
-              );
-            }}
-          >
-            {t("stay.details.contactHost")}
-          </Button>
-
           <Text size="sm" c="dimmed" ta="center">
             Entre em contato diretamente com o anfitrião
           </Text>
         </Stack>
       </Stack>
-    </Modal>
+    </BaseModal>
   );
 };

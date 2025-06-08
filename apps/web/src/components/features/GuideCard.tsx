@@ -1,28 +1,17 @@
-import {
-  Card,
-  Badge,
-  Group,
-  Button,
-  Stack,
-  Text,
-  Rating,
-  Tooltip
-} from "@mantine/core";
-import { IconMessage, IconCheck, IconGift } from "@tabler/icons-react";
+import { Card, Badge, Group, Stack, Text } from "@mantine/core";
 import { TourGuide } from "../../types/guides";
 import { useLanguage } from "../../hooks/useLanguage";
 import { GuideAvatar } from "../common/GuideAvatar";
+import { StatusBadge, RatingDisplay, ActionButtonGroup } from "../ui";
 
 interface GuideCardProps {
   guide: TourGuide;
   onViewDetails: (guide: TourGuide) => void;
-  onContact: (guide: TourGuide) => void;
 }
 
 export const GuideCard: React.FC<GuideCardProps> = ({
   guide,
-  onViewDetails,
-  onContact
+  onViewDetails
 }) => {
   const { t } = useLanguage();
 
@@ -50,41 +39,30 @@ export const GuideCard: React.FC<GuideCardProps> = ({
       onClick={() => onViewDetails(guide)}
     >
       <Card.Section>
-        <GuideAvatar src={guide.photo} alt={guide.name} height={140} />
+        <GuideAvatar src={guide.photo} alt={guide.name} />
       </Card.Section>
 
       <Stack gap="xs" mt="md">
         {/* Nome e Badges de Status */}
-
         <Text fw={600} size="md" lineClamp={1} flex={1}>
           {guide.name}
         </Text>
         <Group justify="space-between" align="flex-start">
           <Group gap={4}>
             {guide.verified && (
-              <Tooltip label={t("guides.details.verified")}>
-                <Badge
-                  variant="filled"
-                  color="blue"
-                  size="xs"
-                  leftSection={<IconCheck size={10} />}
-                >
-                  {t("guides.details.verified")}
-                </Badge>
-              </Tooltip>
+              <StatusBadge
+                type="verified"
+                tooltip={t("guides.details.verified")}
+                label={t("guides.details.verified")}
+              />
             )}
 
             {guide.free && (
-              <Tooltip label={t("guides.details.free")}>
-                <Badge
-                  variant="filled"
-                  color="green"
-                  size="xs"
-                  leftSection={<IconGift size={10} />}
-                >
-                  {t("guides.details.free")}
-                </Badge>
-              </Tooltip>
+              <StatusBadge
+                type="free"
+                tooltip={t("guides.details.free")}
+                label={t("guides.details.free")}
+              />
             )}
           </Group>
         </Group>
@@ -96,12 +74,7 @@ export const GuideCard: React.FC<GuideCardProps> = ({
 
         {/* Rating e Idiomas */}
         <Group justify="space-between" align="center">
-          <Group gap="xs">
-            <Rating value={guide.rating || 0} readOnly size="sm" />
-            <Text size="xs" c="dimmed">
-              ({(guide.rating || 0).toFixed(1)})
-            </Text>
-          </Group>
+          <RatingDisplay rating={guide.rating || 0} showValue size="sm" />
 
           <Badge variant="light" size="sm">
             {guide.languages?.slice(0, 2).join(", ") || "Português"}
@@ -114,30 +87,22 @@ export const GuideCard: React.FC<GuideCardProps> = ({
         </Text>
 
         {/* Botões de Ação */}
-        <Group justify="space-between" mt="auto" pt="xs" gap="xs">
-          <Button
-            variant="light"
-            size="sm"
-            style={{ flex: 1 }}
-            onClick={(e) => {
-              e.stopPropagation();
-              onViewDetails(guide);
-            }}
-          >
-            {t("common.viewDetails")}
-          </Button>
-
-          <Button
-            variant="filled"
-            size="sm"
-            leftSection={<IconMessage size={14} />}
-            onClick={(e) => {
-              e.stopPropagation();
-              onContact(guide);
-            }}
-          >
-            {t("guides.details.contact")}
-          </Button>
+        <Group mt="auto" pt="xs">
+          <ActionButtonGroup
+            actions={[
+              {
+                label: t("common.viewDetails"),
+                variant: "filled",
+                size: "sm",
+                flex: 1,
+                onClick: (e?: React.MouseEvent) => {
+                  e?.stopPropagation();
+                  onViewDetails(guide);
+                }
+              }
+            ]}
+            fullWidth
+          />
         </Group>
       </Stack>
     </Card>
